@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Whole Leader Assessment: Chapter 1 Prototype</title>
+<title>Whole Leader Assessment: Chapters 1 to 3 Prototype</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -170,6 +170,28 @@ h2{font-size:32px}
 @media (min-width:600px) and (min-height:760px){body{align-items:center;background:radial-gradient(ellipse at 50% 85%,#2c4d7e,#041933 70%)}.app{height:min(100%,880px);border-radius:28px}}
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation-duration:.01s!important}}
 @media (max-height:700px){.question .qtext{font-size:25px;min-height:110px}.opt{padding:12px 16px}h1{font-size:34px}.chips{margin:12px 0}}
+/* Chapters 1 to 3 additions */
+#sky stop{transition:stop-color 2.4s ease}
+.sun{transition:transform 2.6s cubic-bezier(.2,.7,.2,1)}
+.app[data-scene="faith"] #sky .s1{stop-color:#1f4f8a}
+.app[data-scene="faith"] #sky .s2{stop-color:#dcae5a}
+.app[data-scene="faith"] #sky .s3{stop-color:#f7e5b8}
+.app[data-scene="faith"] .sun{transform:translateY(-70px)}
+.app[data-scene="relational"] #sky .s1{stop-color:#2b3c6c}
+.app[data-scene="relational"] #sky .s2{stop-color:#c48c5f}
+.app[data-scene="relational"] #sky .s3{stop-color:#f0cfa7}
+.app[data-scene="relational"] .sun{transform:translateY(28px)}
+.question .qstem{font-family:Fraunces,serif;font-size:18px;color:rgba(246,239,225,.78);margin-top:12px;text-shadow:0 2px 14px rgba(2,16,34,.8)}
+.question .qstem[hidden]{display:none}
+.question .qstem+.qtext{margin-top:6px}
+.pause-count{margin-top:14px;min-height:22px;font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:rgba(246,239,225,.7)}
+.badge .glyph.num{font-size:44px;font-variant-numeric:tabular-nums}
+.bars.wide .row{grid-template-columns:124px 1fr 30px}
+.panel.safety{background:rgba(70,62,30,.95);border-color:var(--gold)}
+.panel.safety p{color:var(--cream)}
+.panel.start{border-color:rgba(227,201,131,.5)}
+.divider{display:flex;align-items:center;gap:12px;margin:30px 0 20px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft)}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:rgba(227,201,131,.35)}
 </style>
 </head>
 <body>
@@ -180,8 +202,8 @@ h2{font-size:32px}
     <svg viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice">
       <defs>
         <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#041933"/><stop offset=".42" stop-color="#163b6b"/>
-          <stop offset=".62" stop-color="#c79a4a"/><stop offset=".72" stop-color="#f1dcaa"/><stop offset="1" stop-color="#f6efe1"/>
+          <stop class="s0" offset="0" stop-color="#041933"/><stop class="s1" offset=".42" stop-color="#163b6b"/>
+          <stop class="s2" offset=".62" stop-color="#c79a4a"/><stop class="s3" offset=".72" stop-color="#f1dcaa"/><stop class="s4" offset="1" stop-color="#f6efe1"/>
         </linearGradient>
         <radialGradient id="sunG"><stop offset="0" stop-color="#fff6dc"/><stop offset=".35" stop-color="#f3d58f" stop-opacity=".9"/><stop offset="1" stop-color="#e3b65a" stop-opacity="0"/></radialGradient>
         <linearGradient id="mist" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6efe1" stop-opacity="0"/><stop offset="1" stop-color="#f6efe1" stop-opacity=".35"/></linearGradient>
@@ -204,7 +226,7 @@ h2{font-size:32px}
     </button>
     <div class="progress-wrap" id="progress">
       <div class="progress-label"><span id="progLeft">Ch 1 · Your Wiring</span><span id="progRight">1 of 104</span></div>
-      <div class="chapters"><span><i id="c1"></i></span><span><i></i></span><span><i></i></span><span><i></i></span></div>
+      <div class="chapters"><span><i id="c1"></i></span><span><i id="c2"></i></span><span><i id="c3"></i></span><span><i id="c4"></i></span></div>
     </div>
     <button class="iconbtn" id="soundBtn" aria-label="Turn sound on" style="margin-left:auto">
       <svg id="soundIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></svg>
@@ -238,8 +260,8 @@ h2{font-size:32px}
   <!-- 2. Chapter card -->
   <section class="screen chapter" id="s-chapter">
     <div class="eyebrow">Chapter</div>
-    <div class="num">1</div>
-    <h2>Your Wiring</h2>
+    <div class="num" id="chNum">1</div>
+    <h2 id="chTitle">Your Wiring</h2>
     <p class="lead words" id="chapterWords">Before we look at how you lead, let's look at how God made you.</p>
     <div class="verse" id="chapterVerse">"I will praise thee; for I am fearfully and wonderfully made."<small>Psalm 139:14</small></div>
     <button class="btn" id="chapterNext">Let's begin</button>
@@ -248,11 +270,11 @@ h2{font-size:32px}
   <!-- 3. Section intro -->
   <section class="screen section-intro" id="s-intro">
     <div class="card">
-      <div class="eyebrow">Part A · Temperament · 16 questions</div>
-      <h2>How you naturally move</h2>
-      <p class="lead">Rate how much you agree with each statement. Go with your first instinct. Answer as you really are most of the time, not as you wish you were.</p>
+      <div class="eyebrow" id="introEyebrow">Part A · Temperament · 16 questions</div>
+      <h2 id="introTitle">How you naturally move</h2>
+      <p class="lead" id="introText">Rate how much you agree with each statement. Go with your first instinct. Answer as you really are most of the time, not as you wish you were.</p>
       <div class="howto"></div>
-      <div class="howto-l"><span>Strongly disagree</span><span>Strongly agree</span></div>
+      <div class="howto-l"><span id="howtoLeft">Strongly disagree</span><span id="howtoRight">Strongly agree</span></div>
       <div style="height:22px"></div>
       <button class="btn" id="introNext">I'm ready</button>
     </div>
@@ -261,25 +283,27 @@ h2{font-size:32px}
   <!-- 4. Question -->
   <section class="screen question" id="s-question">
     <div class="qmeta" id="qmeta">Temperament · 1 of 16</div>
+    <div class="qstem" id="qstem" hidden></div>
     <div class="qtext" id="qtext"></div>
     <div class="options" id="options"></div>
   </section>
 
   <!-- 5. Pause -->
   <section class="screen pause" id="s-pause">
-    <div class="eyebrow">A moment to breathe</div>
+    <div class="eyebrow" id="pauseEyebrow">A moment to breathe</div>
     <div class="breath" id="breath"><div class="ring"></div><div class="orb"></div><div class="cue" id="breathCue">Breathe in</div></div>
-    <h2 style="margin-top:22px">You're halfway through Part A.</h2>
-    <div class="verse">"Be still, and know that I am God."<small>Psalm 46:10</small></div>
-    <div style="height:32px"></div>
+    <h2 style="margin-top:22px" id="pauseTitle">You're halfway through Part A.</h2>
+    <div class="verse" id="pauseVerse">"Be still, and know that I am God."<small>Psalm 46:10</small></div>
+    <div class="pause-count" id="pauseCount"></div>
+    <div style="height:22px"></div>
     <button class="btn" id="pauseNext">Continue</button>
   </section>
 
   <!-- 6. Building insight -->
   <section class="screen building" id="s-building">
     <svg class="constellation" id="constellation" viewBox="0 0 240 240"></svg>
-    <div class="eyebrow">Your first insight is ready</div>
-    <h2 style="margin-top:10px">This is the way you were wired to lead.</h2>
+    <div class="eyebrow">Your insight is ready</div>
+    <h2 style="margin-top:10px" id="buildTitle">This is the way you were wired to lead.</h2>
   </section>
 
   <!-- 7. Reveal -->
@@ -289,14 +313,13 @@ h2{font-size:32px}
 
   <!-- 8. End of prototype -->
   <section class="screen end" id="s-end">
-    <div class="eyebrow">End of prototype</div>
+    <div id="endSafety"></div>
+    <div class="eyebrow">Chapters 1 to 3 complete</div>
     <h2 style="margin:10px 0 6px">In the full experience, the journey continues</h2>
     <ul>
-      <li><b>1</b><span>Part B, Attachment Wiring (12), and Part C, Threat Response (15), opened with a guided deep breathing exercise</span></li>
-      <li><b>2</b><span>Chapter 2, Your Faith (18), with its own color and music shift</span></li>
-      <li><b>3</b><span>Chapter 3, Your Relationships (27), ending in the relational profile reveal</span></li>
-      <li><b>4</b><span>Chapter 4, Your Emotions (16), then the Whole Leader Index, four-domain chart and shareable Leadership Signature</span></li>
-      <li><b>5</b><span>Scores saved to the contact in Content Creator Machine, then on to Dr. T's video page</span></li>
+      <li><b>4</b><span>Chapter 4, Your Emotions (16), with its own light and music</span></li>
+      <li><b>5</b><span>The Whole Leader Index, the four-domain chart and your shareable Leadership Signature</span></li>
+      <li><b>6</b><span>Scores saved to the contact in Content Creator Machine, then on to Dr. T's video page</span></li>
     </ul>
     <button class="btn" id="restartBtn">Start the prototype over</button>
   </section>
@@ -308,27 +331,26 @@ h2{font-size:32px}
 (() => {
 "use strict";
 // ---------- Content (from the Whole Leader Assessment Build Guide) ----------
-const SCALE_A = ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"];
-const QUESTIONS = [
- ["T1","I make decisions quickly, even when I have only part of the information.","Pioneer"],
- ["T2","I get restless when a project moves slowly.","Pioneer"],
- ["T3","I am comfortable taking charge when no one else steps up.","Pioneer"],
- ["T4","I would rather start something new than maintain something that already works.","Pioneer"],
- ["T5","I recharge by being around people.","Encourager"],
- ["T6","I can usually lift the mood of a room.","Encourager"],
- ["T7","I think out loud and share ideas as they come.","Encourager"],
- ["T8","People describe me as warm and expressive.","Encourager"],
- ["T9","I prefer a steady, predictable pace over constant change.","Shepherd"],
- ["T10","I notice when someone is struggling, even when they say nothing.","Shepherd"],
- ["T11","I stay loyal to people long after others have moved on.","Shepherd"],
- ["T12","I do my best work supporting others behind the scenes.","Shepherd"],
- ["T13","I want to understand the details before I commit to a plan.","Architect"],
- ["T14","I notice errors and inconsistencies that others overlook.","Architect"],
- ["T15","I hold myself and others to high standards of quality.","Architect"],
- ["T16","I think carefully before I speak in meetings.","Architect"],
-];
-// Interleave so the pattern being measured is not obvious (T1,T5,T9,T13,T2,...)
-const ORDER = [0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15];
+const SCALES = {
+  A: ["Strongly disagree","Disagree","Neutral","Agree","Strongly agree"],
+  B: ["Never","Rarely","Sometimes","Often","Almost always"]
+};
+const REVERSE = new Set(["S6","E4","E7","E12","E16"]);   // Rule 1
+const TOTAL = 104;
+const CHAPTERS = {
+  1:{title:"Your Wiring", size:43, key:1,
+     words:"Before we look at how you lead, let's look at how God made you.",
+     verse:'"I will praise thee; for I am fearfully and wonderfully made."<small>Psalm 139:14</small>', btn:"Let's begin"},
+  2:{title:"Your Faith", size:18, key:1.3348, scene:"faith",
+     words:"Now let's look at the relationship that holds everything else together: you and God.",
+     verse:'"Trust in the LORD with all thine heart; and lean not unto thine own understanding."<small>Proverbs 3:5</small>', btn:"I'm ready"},
+  3:{title:"Your Relationships", size:27, key:1.1225, scene:"relational",
+     words:"Leadership is lived with people. Let's look at how you show up with the people around you.",
+     verse:'"Bear ye one another\'s burdens, and so fulfil the law of Christ."<small>Galatians 6:2</small>', btn:"Let's begin"},
+  4:{title:"Your Emotions", size:16}
+};
+
+// Temperament (Part A)
 const TYPES = {
  Pioneer:{glyph:"P",portrait:"Scripture portrait: Deborah, Judges 4 and 5",
   drive:"Forward motion. You see what could be and move toward it before others are ready.",
@@ -355,19 +377,291 @@ const TYPES = {
   blind:"Perfectionism, slow decisions, critical tone, holding work too long.",
   edge:"Release work before it is perfect and extend the same grace to people that you give to process."}
 };
-const TYPE_ORDER = ["Pioneer","Encourager","Shepherd","Architect"];
-const TOASTS = {4:"<b>Honest beats ideal.</b> There are no right answers here.",12:"<b>Almost there.</b> Four more and your first insight unlocks."};
-const PAUSE_AFTER = 8;
-const TOTAL = 104;
+
+// Attachment wiring (Part B)
+const ATTACH = {
+ Secure:{glyph:"S",
+  traits:"Comfortable with closeness and independence. Trusts repair after conflict. Asks for help without shame.",
+  means:"You can lead from connection. Closeness and conflict do not threaten your sense of self.",
+  focus:"Use your security to create safety for your team."},
+ Anxious:{glyph:"A",
+  traits:"Scans for signs of disconnection. Needs reassurance. Replays interactions. Sensitive to tone and distance.",
+  means:"Approval and closeness can drive decisions. Silence from others can feel like rejection.",
+  focus:"Build internal steadiness and separate other people's moods from your worth."},
+ Avoidant:{glyph:"A",
+  traits:"Highly self-reliant. Uncomfortable being depended on. Pulls back when closeness grows. Prefers solving problems alone.",
+  means:"You lead well alone and struggle to let people in. Your team may experience you as distant.",
+  focus:"Practice receiving help and tolerate being known."},
+ Disorganized:{glyph:"D",
+  traits:"Wants closeness and braces against it. Reactions can feel confusing even to yourself. Relationships can swing between pursuit and retreat.",
+  means:"Relationships can feel unpredictable from the inside. Trust is hard to build and easy to lose.",
+  focus:"Build safety first through slow, consistent relational repair work."}
+};
+
+// Threat response (Part C)
+const THREAT = {
+ "Fight":{glyph:"F",traits:"Heat, tension, urgency. Moves toward the threat with force.",
+  looks:"Control, sharpness, pushing to win or fix immediately.",
+  focus:"Slow the charge and separate strength from aggression."},
+ "Flight":{glyph:"F",traits:"Racing mind, restlessness, need for motion. Moves away from discomfort.",
+  looks:"Busyness, overwork, changing the subject, staying ahead of every risk.",
+  focus:"Build tolerance for stillness and stop outrunning discomfort."},
+ "Freeze":{glyph:"F",traits:"Blank mind, stalled body, inability to act.",
+  looks:"Delayed decisions, going silent in meetings, knowing what to do and not doing it.",
+  focus:"Restore movement in small steps with body-based grounding."},
+ "Fawn":{glyph:"F",traits:"Attunes to the other person and abandons self.",
+  looks:"Quick agreement, over-apologizing, over-accommodating to keep peace.",
+  focus:"Recover your own voice and preferences."},
+ "Collapse/Shutdown":{glyph:"C",traits:"Numbness, heaviness, low energy, withdrawal, hopelessness. The system drops into conservation.",
+  looks:"Disengagement, exhaustion, pulling away from people and responsibility.",
+  focus:"Gentle reactivation, with safety and support before performance."}
+};
+const SAFETY_TEXT = "Some of your answers show that you may be carrying a heavy level of hopelessness or exhaustion right now. You do not have to carry this alone. Dr. Miles will reach out to you personally. If you are in crisis or thinking about harming yourself, call or text 988 to reach the Suicide and Crisis Lifeline in the United States, or call 911. Outside the United States, contact your local emergency number.";
+
+// Spiritual subscales
+const SPIRIT_SUB = {
+ "Trust":{high:"You rest in God's goodness and timing, even in pain.",low:"You carry outcomes yourself and struggle to release control."},
+ "Dependence":{high:"You bring decisions and ordinary moments to God.",low:"You lead in your own strength and pray mainly in crisis."},
+ "Identity in Christ":{high:"Your worth is anchored in who you are in Christ.",low:"Your worth rides on performance, approval, or results."},
+ "Time with God":{high:"You have unhurried, personal time with God.",low:"Your time with God is rushed, rare, or tied to ministry preparation."},
+ "Spiritual Practices":{high:"Rest, stillness, and private worship are part of your life.",low:"Practices that restore you are missing or guilt-driven."},
+ "Application":{high:"Your faith shapes how you lead and respond under pressure.",low:"There is a gap between what you believe and how you lead."}
+};
+
+// Relational profiles
+const PROFILES = {
+ "Rescuer":{name:"The Rescuer",glyph:"R",
+  shows:"You see need and move toward it fast. People feel helped and cared for by you.",
+  traits:"Fixes problems before being asked, feels responsible for others' emotions, uneasy when not needed, struggles to receive.",
+  costs:"You carry what is not yours and quietly resent it. Exhaustion builds while others grow dependent.",
+  focus:"Separate care from responsibility and let others own their part."},
+ "Peacekeeper":{name:"The Peacekeeper",glyph:"P",
+  shows:"You keep the room calm and people comfortable.",
+  traits:"Avoids conflict, smooths tension quickly, holds back opinions, reads the room before speaking.",
+  costs:"Unspoken issues grow and your voice disappears. People may not know what you think.",
+  focus:"Practice clean, direct truth-telling in low-stakes moments first."},
+ "Guarded One":{name:"The Guarded One",glyph:"G",
+  shows:"You are steady, private, and hard to rattle.",
+  traits:"Keeps people at a distance, shares facts more than feelings, slow to trust, self-protective.",
+  costs:"People respect you and do not feel close to you. Loneliness at the top becomes normal.",
+  focus:"Take small, chosen risks of being known."},
+ "Performer":{name:"The Performer",glyph:"P",
+  shows:"You arrive prepared, capable, and impressive.",
+  traits:"Driven to be seen as competent, anxious about how others see you, hides struggle, measures worth by output.",
+  costs:"You are admired for a version of you that is exhausting to maintain.",
+  focus:"Let trusted people see the unpolished version of you."},
+ "Commander":{name:"The Commander",glyph:"C",
+  shows:"You bring clarity, direction, and strength.",
+  traits:"Takes over when others fall short, struggles to share decisions, intense presence, strong opinions.",
+  costs:"People comply with you rather than trust you. Others stop bringing their best ideas.",
+  focus:"Share control and ask before you decide."},
+ "Anchored Connector":{name:"The Anchored Connector",glyph:"A",
+  shows:"Present, honest, and boundaried in most relationships.",
+  traits:"None of the five protective patterns dominate. You connect without losing yourself.",
+  costs:"Others may lean on you more than is sustainable.",
+  focus:"Build reciprocal relationships where you also receive."}
+};
+
+// Domain bands (Rule 4) and per-domain band results
+const BANDS = ["Healing","Restoring","Growing","Transforming"];
+const BAND_RANGE = {Healing:"1.0 to 2.4",Restoring:"2.5 to 3.2",Growing:"3.3 to 3.9",Transforming:"4.0 to 5.0"};
+const DOMAIN_RESULTS = {
+ neuro:{
+  Healing:["Your nervous system is working overtime. Pressure pulls you into protective patterns fast, and closeness may feel more like risk than refuge.","Build safety in the body first. Map your threat cycle and establish daily regulation anchors.","Track your strongest threat reaction for 7 days: the trigger, what your body did, and how long it lasted."],
+  Restoring:["You have real moments of steadiness, and stress still knocks you back into old wiring.","Shorten the time between trigger and recovery. Name your attachment wiring as it activates.","Pick one daily pause point and do a deep breathing exercise for 2 minutes before it."],
+  Growing:["Your wiring supports you most of the time. Threat responses show up under heavy load and you come back.","Identify the specific settings that still hijack you, such as criticism, conflict with authority, or scarcity.","Write down the one situation that reliably pulls you off center and what happens in your body first."],
+  Transforming:["You lead from a regulated, secure base. People around you borrow your calm.","Protect your capacity and learn to steady your team under pressure.","Name one person on your team who needs your steadiness this month and schedule time with them."]},
+ spirit:{
+  Healing:["Your relationship with God may feel distant, dutiful, or saved for emergencies. Your worth may be tied to performance. This score is a starting point, not a verdict on your faith.","Rebuild trust through honest conversation with God. Ground identity in Christ before rebuilding rhythms.","Spend 10 minutes a day telling God the truth about where you are, with no agenda. Anchor scripture: Psalm 62:8."],
+  Restoring:["You believe the right things, and daily dependence is inconsistent. Faith shows up more in crisis than in ordinary days.","Connect belief to daily rhythm. Close the gap between what you teach and what you practice.","Choose one fixed daily time with God and protect it for 7 days straight."],
+  Growing:["You are faith-forward. Your rhythms are consistent and trust holds under most pressure. One subscale usually lags behind the rest.","Target your lowest subscale with a specific practice and accountability.","Name your lowest subscale and tell one trusted person your plan for it."],
+  Transforming:["Your private and public faith match. You lead from dependence on God rather than effort.","Guard your own formation while you form others. Develop the leaders coming behind you.","Block one unhurried half day with God this month, separate from ministry preparation."]},
+ rel:{
+  Healing:["Relationships cost you more than they give. You may be isolated at the top, carrying others, or sitting in unrepaired conflict.","Establish boundaries and build one safe, reciprocal relationship.","Name one person you can be honest with and schedule a conversation with no agenda."],
+  Restoring:["You have real relational strengths and one or two clear gaps, most often boundaries or repair.","Target your weakest subscale with practice in real relationships.","Say one clean no this week without over-explaining."],
+  Growing:["Your relationships are mostly healthy. Strain shows up under pressure or with specific people.","Identify the relationships where your profile pattern takes over and practice a different response there.","Choose one strained relationship and plan one repair step."],
+  Transforming:["You build trust and create safety for others. People can be honest with you.","Develop relational health in the leaders around you and protect your own support system.","Ask someone you lead how you can support them better, and listen without defending."]}
+};
+
+// ---------- Parts: one per page of the build guide ----------
+// Interleaved order (as in Part A) wherever the questions measure competing patterns,
+// so the pattern being measured is not obvious. Subscale pages keep the guide's order.
+const PARTS = [
+ {id:"T", ch:1, part:"Part A", name:"Temperament", scale:"A", opener:"chapter",
+  title:"How you naturally move",
+  text:"Rate how much you agree with each statement. Go with your first instinct. Answer as you really are most of the time, not as you wish you were.",
+  qs:[
+   ["T1","I make decisions quickly, even when I have only part of the information.","Pioneer"],
+   ["T2","I get restless when a project moves slowly.","Pioneer"],
+   ["T3","I am comfortable taking charge when no one else steps up.","Pioneer"],
+   ["T4","I would rather start something new than maintain something that already works.","Pioneer"],
+   ["T5","I recharge by being around people.","Encourager"],
+   ["T6","I can usually lift the mood of a room.","Encourager"],
+   ["T7","I think out loud and share ideas as they come.","Encourager"],
+   ["T8","People describe me as warm and expressive.","Encourager"],
+   ["T9","I prefer a steady, predictable pace over constant change.","Shepherd"],
+   ["T10","I notice when someone is struggling, even when they say nothing.","Shepherd"],
+   ["T11","I stay loyal to people long after others have moved on.","Shepherd"],
+   ["T12","I do my best work supporting others behind the scenes.","Shepherd"],
+   ["T13","I want to understand the details before I commit to a plan.","Architect"],
+   ["T14","I notice errors and inconsistencies that others overlook.","Architect"],
+   ["T15","I hold myself and others to high standards of quality.","Architect"],
+   ["T16","I think carefully before I speak in meetings.","Architect"]],
+  order:[0,4,8,12,1,5,9,13,2,6,10,14,3,7,11,15],
+  pauseAfter:8, pause:{title:"You're halfway through Part A.", verse:'"Be still, and know that I am God."<small>Psalm 46:10</small>'},
+  toasts:{4:"<b>Honest beats ideal.</b> There are no right answers here.",12:"<b>Almost there.</b> Four more and your first insight unlocks."},
+  buildTitle:"This is the way you were wired to lead.", reveal:revealTemperament,
+  demo:{Pioneer:[3,2,4,2],Encourager:[3,4,3,4],Shepherd:[4,5,5,4],Architect:[4,3,4,4]}},
+
+ {id:"A", ch:1, part:"Part B", name:"Attachment Wiring", scale:"A", opener:"breath",
+  breath:{eyebrow:"Before Part B", title:"Let's take three slow breaths together.",
+    verse:'"There is no fear in love; but perfect love casteth out fear."<small>1 John 4:18</small>'},
+  title:"How you hold people close",
+  text:"These statements are about your closest relationships. Rate how much you agree. There is nothing to get right here, only something to understand.",
+  qs:[
+   ["A1","I can depend on the people close to me without feeling weak.","Secure"],
+   ["A2","I can let someone get close and still feel like myself.","Secure"],
+   ["A3","When conflict happens in a close relationship, I trust we can repair it.","Secure"],
+   ["A4","I worry that the people closest to me will lose interest in me.","Anxious"],
+   ["A5","When someone pulls away, I need reassurance quickly.","Anxious"],
+   ["A6","I replay conversations, wondering whether I said something wrong.","Anxious"],
+   ["A7","I feel uncomfortable when people depend on me emotionally.","Avoidant"],
+   ["A8","I prefer to handle problems on my own rather than ask for help.","Avoidant"],
+   ["A9","When a relationship gets very close, I find reasons to pull back.","Avoidant"],
+   ["A10","I want closeness and fear it at the same time.","Disorganized"],
+   ["A11","My reactions in close relationships sometimes surprise or confuse me.","Disorganized"],
+   ["A12","Closeness can feel both comforting and threatening to me.","Disorganized"]],
+  order:[0,3,6,9,1,4,7,10,2,5,8,11],
+  toasts:{6:"<b>Halfway through Part B.</b> Thank you for being honest with yourself.",10:"<b>Two more.</b> Your attachment wiring is almost ready."},
+  buildTitle:"This is how you were wired to connect.", reveal:revealAttachment,
+  demo:{Secure:[4,4,3],Anxious:[3,4,4],Avoidant:[2,3,2],Disorganized:[2,2,2]}},
+
+ {id:"R", ch:1, part:"Part C", name:"Threat Response", scale:"B", opener:"breath",
+  stem:"When I feel threatened, criticized, or overwhelmed...",
+  breath:{eyebrow:"Before Part C", title:"Let your shoulders drop. Breathe with the light.",
+    verse:'"Casting all your care upon him; for he careth for you."<small>1 Peter 5:7</small>'},
+  title:"What your body does under pressure",
+  text:"Each statement finishes the sentence \"When I feel threatened, criticized, or overwhelmed...\" Rate how often it happens for you. Your body learned these responses to protect you.",
+  qs:[
+   ["R1","I become sharp, defensive, or controlling.","Fight"],
+   ["R2","I push harder to win or fix the problem immediately.","Fight"],
+   ["R3","I feel heat, tension, or anger rise in my body.","Fight"],
+   ["R4","I get busy, leave, or change the subject to escape the discomfort.","Flight"],
+   ["R5","My mind races and I cannot sit still.","Flight"],
+   ["R6","I overwork to stay ahead of what might go wrong.","Flight"],
+   ["R7","I go blank and cannot find my words.","Freeze"],
+   ["R8","I know what to do but cannot make myself move.","Freeze"],
+   ["R9","I put off decisions until the pressure passes.","Freeze"],
+   ["R10","I agree quickly to keep the other person calm.","Fawn"],
+   ["R11","I focus on the other person's feelings and lose track of my own.","Fawn"],
+   ["R12","I apologize even when I did nothing wrong.","Fawn"],
+   ["R13","I feel numb, heavy, or far away from myself.","Collapse/Shutdown"],
+   ["R14","I lose energy and want to withdraw from everyone.","Collapse/Shutdown"],
+   ["R15","I feel hopeless that anything I do will make a difference.","Collapse/Shutdown"]],
+  order:[0,3,6,9,12,1,4,7,10,13,2,5,8,11,14],
+  pauseAfter:8, pause:{title:"You're more than halfway through Part C.", verse:'"He healeth the broken in heart, and bindeth up their wounds."<small>Psalm 147:3</small>'},
+  toasts:{4:"<b>Notice without judging.</b> Awareness is where change begins.",12:"<b>Three more.</b> Then Chapter 1 is complete."},
+  buildTitle:"Chapter 1 is complete. This is your wiring.", reveal:revealThreat,
+  demo:{"Fight":[3,4,3],"Flight":[4,4,5],"Freeze":[2,3,3],"Fawn":[3,2,3],"Collapse/Shutdown":[2,2,1]}},
+
+ {id:"S", ch:2, part:"", name:"Your Faith", scale:"mixed", opener:"chapter",
+  title:"Your real walk with God",
+  text:"Rate each statement honestly. This is about your real walk with God, not your role. Some statements ask how much you agree, and some ask how often.",
+  qs:[
+   ["S1","I believe God is good even when my circumstances are painful.","Trust","A"],
+   ["S2","I can release outcomes to God without needing to control them.","Trust","A"],
+   ["S3","I trust that God's timing is better than mine.","Trust","A"],
+   ["S4","I bring decisions to God before I act.","Dependence","A"],
+   ["S5","I ask God for help in the ordinary parts of my day, not only in a crisis.","Dependence","A"],
+   ["S6","I lead mostly in my own strength and pray when things go wrong.","Dependence","A"],
+   ["S7","My worth comes from who I am in Christ, not from my performance.","Identity in Christ","A"],
+   ["S8","I can receive correction without feeling like a failure.","Identity in Christ","A"],
+   ["S9","I know what Scripture says about who I am, and I believe it about myself.","Identity in Christ","A"],
+   ["S10","I spend unhurried time alone with God.","Time with God","B"],
+   ["S11","I read or study Scripture for my own life, not only to prepare to teach or lead.","Time with God","B"],
+   ["S12","I pray beyond meals, meetings, and emergencies.","Time with God","B"],
+   ["S13","I practice rest or Sabbath without guilt.","Spiritual Practices","B"],
+   ["S14","I practice silence and stillness before God.","Spiritual Practices","B"],
+   ["S15","I worship privately, outside of church services.","Spiritual Practices","B"],
+   ["S16","What I read in Scripture changes how I lead that week.","Application","A"],
+   ["S17","My private life with God matches the faith I present publicly.","Application","A"],
+   ["S18","I respond to conflict and pressure in ways that reflect my faith.","Application","A"]],
+  pauseAfter:9, pause:{title:"You're halfway through Chapter 2.", verse:'"Come unto me, all ye that labour and are heavy laden, and I will give you rest."<small>Matthew 11:28</small>'},
+  toasts:{4:"<b>No performance needed.</b> God already knows, and loves you here.",15:"<b>Three more.</b> Then your faith insight unlocks."},
+  buildTitle:"This is where you are with God right now.", reveal:revealSpirit,
+  demo:{"Trust":[4,3,4],"Dependence":[4,3,2],"Identity in Christ":[3,3,4],"Time with God":[3,3,4],"Spiritual Practices":[2,2,3],"Application":[4,3,4]}},
+
+ {id:"PH", ch:3, part:"Part A", name:"Relational Health", scale:"A", opener:"chapter",
+  title:"How you show up with people",
+  text:"Think about how you actually show up with people at home, at work, and in ministry. Rate how much you agree.",
+  qs:[
+   ["P1","I let at least one or two people see me as I really am.","Connection"],
+   ["P2","I have relationships outside my leadership role where I am simply cared for.","Connection"],
+   ["P3","I make time for the relationships that matter most to me.","Connection"],
+   ["P4","I say no without long explanations or guilt.","Boundaries"],
+   ["P5","I can tell the difference between helping someone and carrying what belongs to them.","Boundaries"],
+   ["P6","I protect my time and energy even when others are disappointed.","Boundaries"],
+   ["P7","I say what I need directly instead of hinting.","Communication"],
+   ["P8","I listen to understand before I respond.","Communication"],
+   ["P9","I can address a hard issue without avoiding it or attacking the person.","Communication"],
+   ["P10","I apologize specifically when I cause harm.","Repair"],
+   ["P11","I return to a conflict to resolve it rather than letting it fade.","Repair"],
+   ["P12","I forgive without pretending the offense did not happen.","Repair"]],
+  toasts:{6:"<b>Halfway through Part A.</b> Picture the real people in your life as you answer."},
+  reveal:null,
+  demo:{"Connection":[4,3,4],"Boundaries":[2,3,2],"Communication":[3,4,3],"Repair":[4,3,3]}},
+
+ {id:"PP", ch:3, part:"Part B", name:"Relational Profile", scale:"A", opener:"breath",
+  breath:{eyebrow:"Before Part B", title:"Take a breath. You're doing brave work.",
+    verse:'"Behold, how good and how pleasant it is for brethren to dwell together in unity!"<small>Psalm 133:1</small>'},
+  title:"The pattern you fall into",
+  text:"Everyone has a way of protecting themselves in relationships. Rate how much you agree, and keep thinking of home, work, and ministry.",
+  qs:[
+   ["P13","I step in to fix other people's problems before they ask.","Rescuer"],
+   ["P14","I feel responsible for how other people feel.","Rescuer"],
+   ["P15","I feel uneasy when I am not needed.","Rescuer"],
+   ["P16","I avoid conflict even when something needs to be said.","Peacekeeper"],
+   ["P17","I smooth things over quickly so everyone is comfortable.","Peacekeeper"],
+   ["P18","I keep my opinions to myself to avoid tension.","Peacekeeper"],
+   ["P19","I keep people at a safe distance, even people I like.","Guarded One"],
+   ["P20","I share facts about my life more easily than feelings.","Guarded One"],
+   ["P21","I take a long time to trust someone.","Guarded One"],
+   ["P22","I work hard to be seen as competent and impressive.","Performer"],
+   ["P23","I feel anxious when someone might think less of me.","Performer"],
+   ["P24","I hide my struggles so I do not disappoint people.","Performer"],
+   ["P25","I take over when others are not doing it my way.","Commander"],
+   ["P26","I find it hard to let others make decisions that affect me.","Commander"],
+   ["P27","People sometimes experience me as intense or overpowering.","Commander"]],
+  order:[0,3,6,9,12,1,4,7,10,13,2,5,8,11,14],
+  pauseAfter:8, pause:{title:"Almost there. Breathe with me.", verse:'"A new commandment I give unto you, That ye love one another; as I have loved you."<small>John 13:34</small>'},
+  toasts:{12:"<b>Three more.</b> Then your relational profile is revealed."},
+  buildTitle:"This is how you show up with people.", reveal:revealRelational,
+  demo:{"Rescuer":[4,4,3],"Peacekeeper":[3,4,3],"Guarded One":[2,3,3],"Performer":[3,3,4],"Commander":[2,2,2]}}
+];
+// Fill defaults and global question numbering
+let offset = 0;
+PARTS.forEach((p,pi)=>{ p.index = pi; p.order = p.order || p.qs.map((_,i)=>i); p.toasts = p.toasts || {}; p.offset = offset; offset += p.qs.length; });
 
 // ---------- State ----------
-const answers = new Array(16).fill(null);
-let qi = 0, current = "s-welcome", history = [];
+const answers = {};                  // question id -> 1..5 as answered
+let pi = 0, qi = 0, current = "s-welcome", history = [], pauseSeen = {};
+let screenKind = "";                 // "pause" (mid-part) or "opener" (before a part)
 const $ = id => document.getElementById(id);
 const app = $("app");
+const P = () => PARTS[pi];
+const Q = () => P().qs[P().order[qi]];
+const val = id => answers[id] || 0;
+const scored = id => REVERSE.has(id) ? 6 - val(id) : val(id);
+const avg = arr => arr.reduce((a,b)=>a+b,0) / arr.length;
+const r1 = x => Math.round(x*10)/10;
+const f1 = x => r1(x).toFixed(1);
+function band(x){ x = r1(x); return x < 2.5 ? "Healing" : x < 3.3 ? "Restoring" : x < 4.0 ? "Growing" : "Transforming"; }
+function groupAvgs(part, keys){ const out = {}; keys.forEach(k=> out[k] = avg(part.qs.filter(q=>q[2]===k).map(q=>scored(q[0])))); return out; }
+const firstMax = (obj, keys) => keys.reduce((best,k)=> obj[k] > obj[best] ? k : best, keys[0]);   // ties: first listed wins (Rule 6)
+const firstMin = (obj, keys) => keys.reduce((best,k)=> obj[k] < obj[best] ? k : best, keys[0]);
 
-// ---------- Sound (Web Audio: soaking-style pad in C + soft chimes) ----------
-let audio = null, soundOn = false;
+// ---------- Sound (Web Audio: soaking-style pad + soft chimes, shifts key per chapter) ----------
+let audio = null, soundOn = false, keyMul = 1;
 function initAudio(){
   if (audio) return audio;
   try{ if(navigator.audioSession) navigator.audioSession.type='playback'; }catch(e){}
@@ -382,17 +676,19 @@ function initAudio(){
   padBus.connect(dry); dry.connect(master); padBus.connect(conv);
   const lp = ctx.createBiquadFilter(); lp.type="lowpass"; lp.frequency.value=650; lp.Q.value=.6; lp.connect(padBus);
   const lfo = ctx.createOscillator(); lfo.frequency.value=.03; const lfoG = ctx.createGain(); lfoG.gain.value=220; lfo.connect(lfoG); lfoG.connect(lp.frequency); lfo.start();
-  // Constant low C drone (root + fifth), always underneath
-  [65.41, 98.0, 130.81].forEach((f,i)=>{ const o=ctx.createOscillator(); o.type="sine"; o.frequency.value=f;
-    const g=ctx.createGain(); g.gain.value=[.16,.06,.07][i]; o.connect(g); g.connect(padBus); o.start(); });
-  // Swelling upper voices that crossfade slowly through a C progression
+  // Constant low drone (root + fifth), always underneath
+  const DRONE = [65.41, 98.0, 130.81];
+  const drones = DRONE.map((f,i)=>{ const o=ctx.createOscillator(); o.type="sine"; o.frequency.value=f*keyMul;
+    const g=ctx.createGain(); g.gain.value=[.16,.06,.07][i]; o.connect(g); g.connect(padBus); o.start(); return o; });
+  // Swelling upper voices that crossfade slowly through a progression (written in C, transposed per chapter)
   const PROG = [ // Cadd9, Fmaj7/C, Am7/C, Gsus2/C
     [261.63,293.66,329.63,392.00], [261.63,349.23,440.00,523.25], [261.63,329.63,392.00,440.00], [261.63,293.66,392.00,587.33] ];
   let voices = [], step = 0, timer = null;
   function playChord(freqs){
     const t = ctx.currentTime;
     voices.forEach(v=>{ v.g.gain.cancelScheduledValues(t); v.g.gain.setValueAtTime(v.g.gain.value,t); v.g.gain.linearRampToValueAtTime(0,t+6); v.oscs.forEach(o=>o.stop(t+6.2)); });
-    voices = freqs.map((f,i)=>{
+    voices = freqs.map((f0,i)=>{
+      const f = f0*keyMul;
       const g = ctx.createGain(); g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(i===3?.018:.03, t+6);
       const oscs = [-9,0,9].map(det=>{ const o=ctx.createOscillator(); o.type="sawtooth"; o.frequency.value=f; o.detune.value=det; o.connect(g); o.start(t); return o; });
       // shimmer an octave up
@@ -401,6 +697,7 @@ function initAudio(){
     });
   }
   function startProg(){ if (timer) return; playChord(PROG[step]); timer = setInterval(()=>{ step=(step+1)%PROG.length; playChord(PROG[step]); }, 14000); }
+  function retune(){ const t=ctx.currentTime; drones.forEach((o,i)=> o.frequency.setTargetAtTime(DRONE[i]*keyMul, t, 2.5)); if (timer){ step=(step+1)%PROG.length; playChord(PROG[step]); } }
   function chime(freq=880, vol=.12, dur=2.5){
     const t=ctx.currentTime; [1,2.01].forEach((m,i)=>{
       const o=ctx.createOscillator(); o.type="sine"; o.frequency.value=freq*m;
@@ -409,13 +706,13 @@ function initAudio(){
     });
   }
   function swell(){ const t=ctx.currentTime; padBus.gain.cancelScheduledValues(t); padBus.gain.setTargetAtTime(1.35,t,.8); padBus.gain.setTargetAtTime(1,t+4,2); }
-  audio = {ctx, master, padBus, startProg, chime, swell};
+  audio = {ctx, master, padBus, startProg, chime, swell, retune};
   return audio;
 }
 function mood(m){ app.dataset.mood = m; }
-const PENT = [523.25,587.33,659.25,783.99,880.0]; // C major pentatonic, stays in key with the pad
-function tap(v){ if(soundOn&&audio) audio.chime(PENT[v-1], .035, 1.6); }
-function chime(f=1046.5,v=.06){ if(soundOn&&audio) audio.chime(f,v,3); }
+const PENT = [523.25,587.33,659.25,783.99,880.0]; // major pentatonic, stays in key with the pad
+function tap(v){ if(soundOn&&audio) audio.chime(PENT[v-1]*keyMul, .035, 1.6); }
+function chime(f=1046.5,v=.06){ if(soundOn&&audio) audio.chime(f*keyMul,v,3); }
 function setSound(on){
   soundOn = on;
   const icon = $("soundIcon");
@@ -433,54 +730,89 @@ $("soundBtn").onclick = () => setSound(!soundOn);
 $("soundRow").onclick = () => setSound(!soundOn);
 setSound(false);
 
-// ---------- Scene motion ----------
-function sceneFor(){ /* landscape stays still */ }
+// ---------- Scene: each chapter gets its own light and key ----------
+let sceneCh = 1;
+function setChapterScene(ch){
+  if (ch === sceneCh) return; sceneCh = ch;
+  app.dataset.scene = CHAPTERS[ch].scene || "";
+  const m = CHAPTERS[ch].key || 1;
+  if (m !== keyMul){ keyMul = m; if (audio) audio.retune(); }
+}
 
 // ---------- Navigation ----------
 function show(id, opts={}){
   if (id===current) return;
   const from = $(current), to = $(id);
-  if (!opts.noHistory) history.push({screen:current, qi});
+  if (!opts.noHistory) history.push({screen:current, pi, qi, kind:screenKind});
   from.classList.add("leaving"); from.classList.remove("active");
   setTimeout(()=>from.classList.remove("leaving"), 650);
   to.classList.add("active"); current = id;
-  $("backBtn").hidden = !(id==="s-question" || id==="s-intro" || id==="s-pause");
+  screenKind = opts.kind || "";
+  const backable = id==="s-question" || id==="s-intro" || (id==="s-pause" && screenKind==="pause");
+  $("backBtn").hidden = !backable;
   $("progress").classList.toggle("show", ["s-question","s-pause","s-intro"].includes(id));
   if (opts.onShow) opts.onShow();
 }
 $("backBtn").onclick = () => {
   if (current==="s-question" && qi>0){ qi--; renderQ(true); return; }
   const prev = history.pop(); if (!prev) return;
-  qi = (current==="s-pause") ? PAUSE_AFTER-1 : prev.qi; show(prev.screen, {noHistory:true});
+  clearInterval(breathTimer);
+  pi = prev.pi; qi = prev.qi;
+  if (current==="s-pause" && screenKind==="pause") qi = P().pauseAfter-1;
+  if (prev.screen==="s-intro") fillIntro();
+  if (prev.screen==="s-chapter") fillChapter(P().ch);
+  const reopen = prev.screen==="s-pause";
+  if (reopen) fillPause(prev.kind==="opener" ? P().breath : P().pause, prev.kind==="opener");
+  show(prev.screen, {noHistory:true, kind:prev.kind, onShow: reopen ? breathe : null});
   if (prev.screen==="s-question") renderQ(true);
-  mood(prev.screen==="s-question"?"question":prev.screen==="s-chapter"?"chapter":"welcome");
+  mood(prev.screen==="s-question"||prev.screen==="s-intro"?"question":prev.screen==="s-chapter"?"chapter":prev.screen==="s-pause"?"pause":"welcome");
 };
 
 // ---------- Saved progress (this browser only, no account or cookies) ----------
-const KEY = "wla-progress-v1";
-function saveProgress(nextQi){ try{ localStorage.setItem(KEY, JSON.stringify({answers, qi:nextQi, pauseSeen: pauseSeen || nextQi>PAUSE_AFTER, t:Date.now()})); }catch(e){} }
-function loadProgress(){ try{ const d = JSON.parse(localStorage.getItem(KEY)||"null"); if(!d) return null; d.answered = d.answers.filter(a=>a!==null).length; return d; }catch(e){ return null; } }
+const KEY = "wla-progress-v2";
+const answeredCount = () => Object.keys(answers).length;
+function saveProgress(nextQi){ try{ localStorage.setItem(KEY, JSON.stringify({answers, pi, qi:nextQi, pauseSeen, t:Date.now()})); }catch(e){} }
+function loadProgress(){ try{ const d = JSON.parse(localStorage.getItem(KEY)||"null"); if(!d || !d.answers) return null; d.answered = Object.keys(d.answers).length; return d; }catch(e){ return null; } }
 function clearProgress(){ try{ localStorage.removeItem(KEY); }catch(e){} }
+function resetAll(){ Object.keys(answers).forEach(k=> delete answers[k]); pi=0; qi=0; pauseSeen={}; history=[]; setChapterScene(1); }
 function resume(d){
-  d.answers.forEach((a,i)=> answers[i]=a); qi = Math.min(d.qi,15); pauseSeen = !!d.pauseSeen;
-  mood("question"); show("s-question"); renderQ(); toast(`<b>Welcome back.</b> You were on question ${qi+1} of 16.`);
+  Object.assign(answers, d.answers); pi = Math.min(d.pi||0, PARTS.length-1); pauseSeen = d.pauseSeen || {};
+  qi = Math.min(d.qi||0, P().qs.length);
+  setChapterScene(P().ch);
+  if (qi >= P().qs.length){ finishPart(); return; }
+  mood("question"); show("s-question"); renderQ();
+  toast(`<b>Welcome back.</b> You were on question ${P().offset+qi+1} of ${TOTAL}.`);
 }
 function refreshWelcome(){
-  const d = loadProgress(); const has = d && d.answered>0 && d.qi<16;
+  const d = loadProgress(); const has = d && d.answered>0;
   $("beginBtn").textContent = has ? `Continue where I left off` : "Begin my assessment";
   $("restartFromWelcome").hidden = !has;
 }
-$("restartFromWelcome").onclick = () => { clearProgress(); answers.fill(null); qi=0; pauseSeen=false; refreshWelcome(); };
+$("restartFromWelcome").onclick = () => { clearProgress(); resetAll(); refreshWelcome(); };
 refreshWelcome();
 
 // Welcome
 $("beginBtn").onclick = () => {
   const saved = loadProgress();
-  if (saved && saved.answered > 0 && saved.qi < 16){ resume(saved); return; }
+  if (saved && saved.answered > 0){ resume(saved); return; }
   if (!audio && soundOn) initAudio();
-  mood("chapter"); sceneFor(.35);
-  show("s-chapter", {onShow: playChapter});
+  pi = 0; qi = 0; openPart();
 };
+
+// ---------- Opening a part: chapter card, guided breathing, or straight to its intro ----------
+function openPart(){
+  const p = P(); setChapterScene(p.ch);
+  if (p.opener === "chapter"){ fillChapter(p.ch); mood("chapter"); show("s-chapter", {onShow: playChapter}); return; }
+  if (p.opener === "breath"){
+    fillPause(p.breath, true); mood("pause"); show("s-pause", {kind:"opener", onShow: breathe}); return;
+  }
+  fillIntro(); mood("question"); show("s-intro"); updateProgress();
+}
+function fillChapter(ch){
+  const c = CHAPTERS[ch];
+  $("chNum").textContent = ch; $("chTitle").textContent = c.title;
+  $("chapterWords").textContent = c.words; $("chapterVerse").innerHTML = c.verse; $("chapterNext").textContent = c.btn;
+}
 function playChapter(){
   chime(659.25,.1);
   const el = $("chapterWords"); const words = el.textContent.trim().split(/\s+/);
@@ -491,23 +823,35 @@ function playChapter(){
   setTimeout(()=> $("chapterVerse").classList.add("on"), done+500);
   setTimeout(()=> $("chapterNext").classList.add("on"), done+1300);
 }
-$("chapterNext").onclick = () => { mood("question"); sceneFor(.55); show("s-intro"); updateProgress(); };
+$("chapterNext").onclick = () => { fillIntro(); mood("question"); show("s-intro"); updateProgress(); };
+function fillIntro(){
+  const p = P();
+  const label = [p.part, p.name].filter(Boolean).join(" · ");
+  $("introEyebrow").textContent = `${label} · ${p.qs.length} questions`;
+  $("introTitle").textContent = p.title; $("introText").textContent = p.text;
+  const ends = p.scale==="A" ? ["Strongly disagree","Strongly agree"] : p.scale==="B" ? ["Never","Almost always"] : ["Disagree or never","Agree or almost always"];
+  $("howtoLeft").textContent = ends[0]; $("howtoRight").textContent = ends[1];
+}
 $("introNext").onclick = () => { qi = 0; show("s-question"); renderQ(); };
 
-// Questions
+// ---------- Questions ----------
 function updateProgress(){
-  const answered = answers.filter(a=>a!==null).length;
-  $("c1").style.width = (answered/43*100) + "%";      // chapter 1 has 43 questions
-  $("progRight").textContent = `${Math.min(qi+1,16)} of ${TOTAL}`;
+  [1,2,3,4].forEach(ch=>{
+    const n = PARTS.filter(p=>p.ch===ch).reduce((a,p)=> a + p.qs.filter(q=> answers[q[0]]).length, 0);
+    const el = $("c"+ch); if (el) el.style.width = (n/CHAPTERS[ch].size*100) + "%";
+  });
+  $("progLeft").textContent = `Ch ${P().ch} · ${CHAPTERS[P().ch].title}`;
+  $("progRight").textContent = `${P().offset + Math.min(qi+1, P().qs.length)} of ${TOTAL}`;
 }
 function renderQ(back=false){
-  const q = QUESTIONS[ORDER[qi]];
-  $("qmeta").textContent = `Temperament · ${qi+1} of 16`;
+  const p = P(), q = Q(); const scale = SCALES[q[3] || p.scale];
+  $("qmeta").textContent = `${p.name} · ${qi+1} of ${p.qs.length}`;
+  $("qstem").textContent = p.stem || ""; $("qstem").hidden = !p.stem;
   const qt = $("qtext"); qt.classList.remove("swap"); void qt.offsetWidth; qt.textContent = q[1]; qt.classList.add("swap");
   qt.style.animationDirection = back ? "reverse" : "normal";
   const box = $("options"); box.classList.remove("swap"); void box.offsetWidth; box.innerHTML = "";
-  SCALE_A.forEach((label,i)=>{
-    const b = document.createElement("button"); b.className="opt"+(answers[ORDER[qi]]===i+1?" sel":"");
+  scale.forEach((label,i)=>{
+    const b = document.createElement("button"); b.className="opt"+(answers[q[0]]===i+1?" sel":"");
     b.innerHTML = `<span class="dot">${i+1}</span>${label}`; b.onclick = () => choose(i+1, b);
     box.appendChild(b);
   });
@@ -516,14 +860,17 @@ function renderQ(back=false){
 let locked = false;
 function choose(v, btn){
   if (locked) return; locked = true;
-  answers[ORDER[qi]] = v; tap(v); saveProgress(qi+1);
+  answers[Q()[0]] = v; tap(v); saveProgress(qi+1);
   document.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel")); btn.classList.add("sel");
   updateProgress();
   setTimeout(()=>{
     locked = false; qi++;
-    if (TOASTS[qi]) toast(TOASTS[qi]);
-    if (qi === PAUSE_AFTER && !pauseSeen){ pauseSeen = true; mood("pause"); show("s-pause", {onShow: breathe}); return; }
-    if (qi >= 16){ finish(); return; }
+    const p = P();
+    if (p.toasts[qi]) toast(p.toasts[qi]);
+    if (p.pauseAfter && qi === p.pauseAfter && !pauseSeen[p.id]){
+      pauseSeen[p.id] = true; fillPause(p.pause, false); mood("pause"); show("s-pause", {kind:"pause", onShow: breathe}); return;
+    }
+    if (qi >= p.qs.length){ finishPart(); return; }
     renderQ();
   }, 380);
 }
@@ -532,44 +879,95 @@ addEventListener("keydown", e => {
 });
 function toast(html){ const t=$("toast"); { const ob=$("options").getBoundingClientRect(), ab=app.getBoundingClientRect(); const top=ob.bottom-ab.top+14; if (top+80 < ab.height){ t.style.top=top+"px"; t.style.bottom="auto"; } else { t.style.top=""; t.style.bottom=""; } } t.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="#e3c983"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 16.8 5.8 21.3l2.4-7.4L2 9.4h7.6z"/></svg><span>${html}</span>`; t.classList.add("show"); app.classList.add("toasting"); clearTimeout(t._h); t._h=setTimeout(()=>{t.classList.remove("show");app.classList.remove("toasting");},3200); }
 
-// Pause
-let pauseSeen = false, breathTimer = null;
+// ---------- Pause / guided deep breathing exercise ----------
+let breathTimer = null;
+function fillPause(c, guided){
+  $("pauseEyebrow").textContent = guided ? c.eyebrow : "A moment to breathe";
+  $("pauseTitle").textContent = c.title;
+  $("pauseVerse").innerHTML = c.verse;
+  $("pauseCount").textContent = "";
+  $("pauseNext").textContent = guided ? `Begin ${P().part ? P().part + ", " : ""}${P().name}` : "Continue";
+}
 function breathe(){
   chime(523.25,.08);
-  const b = $("breath"), cue = $("breathCue"); let inhale = true; clearInterval(breathTimer);
-  const step = () => { b.classList.toggle("in", inhale); cue.textContent = inhale ? "Breathe in" : "Breathe out"; inhale = !inhale; };
+  const b = $("breath"), cue = $("breathCue"); let inhale = true, n = 0; clearInterval(breathTimer);
+  const guided = screenKind === "opener";
+  const step = () => {
+    b.classList.toggle("in", inhale); cue.textContent = inhale ? "Breathe in" : "Breathe out";
+    if (inhale){ n++; if (guided) $("pauseCount").textContent = n <= 3 ? `Breath ${n} of 3` : "Whenever you're ready"; }
+    inhale = !inhale;
+  };
   setTimeout(step, 300); breathTimer = setInterval(step, 4000);
 }
-$("pauseNext").onclick = () => { clearInterval(breathTimer); mood("question"); show("s-question"); renderQ(); };
+$("pauseNext").onclick = () => {
+  clearInterval(breathTimer);
+  if (screenKind === "opener"){ fillIntro(); mood("question"); show("s-intro"); updateProgress(); return; }
+  mood("question"); show("s-question"); renderQ();
+};
 
-// Score + reveal
-function scores(){
-  const s = {Pioneer:0,Encourager:0,Shepherd:0,Architect:0};
-  QUESTIONS.forEach((q,i)=> s[q[2]] += (answers[i]||0));
-  const max = Math.max(...Object.values(s));
-  const top = TYPE_ORDER.find(t=>s[t]===max); // ties: first listed wins (Rule 6)
-  return {s, top};
-}
-function finish(){ clearProgress();
-  mood("reveal"); sceneFor(.85);
+// ---------- Insight build + reveal ----------
+function finishPart(){
+  const p = P();
+  saveProgress(p.qs.length);
+  if (!p.reveal){ nextPart(); return; }
+  $("buildTitle").textContent = p.buildTitle;
+  mood("reveal");
   show("s-building", {onShow: build});
+}
+function nextPart(){
+  if (pi >= PARTS.length-1){
+    $("endSafety").innerHTML = safetyFlag() ? `<div class="panel safety"><h3>Before you go</h3><p>${SAFETY_TEXT}</p></div>` : "";
+    clearProgress(); mood("welcome"); show("s-end"); return;
+  }
+  pi++; qi = 0; saveProgress(0); openPart();
 }
 function build(){
   const svg = $("constellation");
   svg.innerHTML = `<defs><radialGradient id="cg"><stop offset="0" stop-color="#fff3cf"/><stop offset=".5" stop-color="#e3c983"/><stop offset="1" stop-color="#c9a24a" stop-opacity="0"/></radialGradient></defs><circle cx="120" cy="120" r="80" fill="url(#cg)" style="opacity:0;transition:opacity 1.8s ease" id="core"/>`;
   requestAnimationFrame(()=> setTimeout(()=> svg.querySelector("#core").style.opacity = 1, 50));
-  if (soundOn && audio){ audio.swell(); [523.25,659.25,783.99].forEach((f,i)=>setTimeout(()=>audio.chime(f,.045,3), 300+i*450)); }
-  setTimeout(()=>{ show("s-reveal", {onShow: reveal}); }, 3600);
+  if (soundOn && audio){ audio.swell(); [523.25,659.25,783.99].forEach((f,i)=>setTimeout(()=>audio.chime(f*keyMul,.045,3), 300+i*450)); }
+  setTimeout(()=>{ show("s-reveal", {onShow: () => P().reveal()}); }, 3600);
 }
-function reveal(){
-  const {s, top} = scores(); const t = TYPES[top];
-  chime(1046.5,.12);
-  const rows = TYPE_ORDER.map(k=>`<div class="row ${k===top?"top":""}"><span>${k}</span><div class="track"><div class="fill" data-w="${(s[k]-4)/16*100}"></div></div><span class="val">${s[k]}</span></div>`).join("");
-  $("revealContent").innerHTML = `
-    <div class="eyebrow" style="text-align:center">Chapter 1 insight · Your temperament</div>
-    <div class="badge"><svg viewBox="0 0 170 170"><defs><radialGradient id="bg2" cx=".35" cy=".3"><stop offset="0" stop-color="#f6e5b3"/><stop offset=".6" stop-color="#c9a24a"/><stop offset="1" stop-color="#8c6c24"/></radialGradient></defs>
+function badge(glyph, small){
+  return `<div class="badge"><svg viewBox="0 0 170 170"><defs><radialGradient id="bg2" cx=".35" cy=".3"><stop offset="0" stop-color="#f6e5b3"/><stop offset=".6" stop-color="#c9a24a"/><stop offset="1" stop-color="#8c6c24"/></radialGradient></defs>
       <circle cx="85" cy="85" r="80" fill="none" stroke="#e3c983" stroke-opacity=".35" stroke-dasharray="2 6"/>
-      <circle cx="85" cy="85" r="64" fill="url(#bg2)"/></svg><span class="glyph">${t.glyph}</span></div>
+      <circle cx="85" cy="85" r="64" fill="url(#bg2)"/></svg><span class="glyph${small?" num":""}">${glyph}</span></div>`;
+}
+function bars(title, keys, vals, top, opts={}){
+  const min = opts.min ?? 1, max = opts.max ?? 5, fmt = opts.fmt || f1;
+  const rows = keys.map(k=>`<div class="row ${k===top?"top":""}"><span>${opts.label ? opts.label(k) : k}</span><div class="track"><div class="fill" data-w="${(vals[k]-min)/(max-min)*100}"></div></div><span class="val">${fmt(vals[k])}</span></div>`).join("");
+  return `<div class="panel bars${opts.wide?" wide":""}"><h3>${title}</h3>${rows}</div>`;
+}
+function domainPanel(title, score, results){
+  const b = band(score); const [desc, focus, start] = results[b];
+  return `<div class="panel"><h3>${title}</h3><p>${desc}</p></div>
+    <div class="panel"><h3>Your six-month focus</h3><p>${focus}</p></div>
+    <div class="panel start"><h3>Start this week</h3><p>${start}</p></div>`;
+}
+function nextButton(){
+  const n = PARTS[pi+1];
+  if (!n) return `<div class="next"><button class="btn" id="toNext">Continue</button></div>`;
+  const label = n.ch !== P().ch ? `Continue to Chapter ${n.ch}: ${CHAPTERS[n.ch].title}` : `Continue to ${n.part}: ${n.name}`;
+  const count = n.ch !== P().ch ? CHAPTERS[n.ch].size : n.qs.length;
+  return `<div class="next"><button class="btn" id="toNext">${label}</button><small>${count} questions · about ${Math.max(2, Math.round(count/6))} minutes</small></div>`;
+}
+function showReveal(html){
+  $("s-reveal").scrollTop = 0;
+  $("revealContent").innerHTML = html + nextButton();
+  chime(1046.5,.12);
+  const kids = [...$("revealContent").children];
+  kids.forEach((k,i)=> setTimeout(()=>k.classList.add("on"), 200 + i*260));
+  setTimeout(()=> document.querySelectorAll("#revealContent .bars .fill").forEach(f=> f.style.width = Math.max(0,f.dataset.w)+"%"), 200 + kids.length*260);
+  $("toNext").onclick = nextPart;
+}
+
+function revealTemperament(){
+  const p = PARTS[0], keys = Object.keys(TYPES);
+  const s = {}; keys.forEach(k=> s[k] = p.qs.filter(q=>q[2]===k).reduce((a,q)=>a+val(q[0]),0));   // Rule 3: sums
+  const top = firstMax(s, keys), t = TYPES[top];
+  showReveal(`
+    <div class="eyebrow" style="text-align:center">Chapter 1 insight · Your temperament</div>
+    ${badge(t.glyph)}
     <h2 class="type-name">You are The ${top}</h2>
     <div class="portrait">${t.portrait}</div>
     <div class="drive">${t.drive}</div>
@@ -577,22 +975,109 @@ function reveal(){
     <div class="panel"><h3>Your strengths</h3><p>${t.strengths}</p></div>
     <div class="panel"><h3>Watch for</h3><p>${t.blind}</p></div>
     <div class="panel"><h3>Your growth edge</h3><p>${t.edge}</p></div>
-    <div class="panel bars"><h3>Your temperament mix</h3>${rows}</div>
-    <div class="next"><button class="btn" id="toNext">Continue to Part B: Attachment Wiring</button><small>12 questions · about 2 minutes</small></div>`;
-  const kids = [...$("revealContent").children];
-  kids.forEach((k,i)=> setTimeout(()=>k.classList.add("on"), 200 + i*260));
-  setTimeout(()=> document.querySelectorAll(".bars .fill").forEach(f=> f.style.width = f.dataset.w+"%"), 200 + kids.length*260);
-  $("toNext").onclick = () => { mood("welcome"); sceneFor(1); show("s-end"); };
+    ${bars("Your temperament mix", keys, s, top, {min:4, max:20, fmt:x=>x})}`);
 }
+function revealAttachment(){
+  const p = PARTS[1], keys = Object.keys(ATTACH);
+  const a = groupAvgs(p, keys); const top = firstMax(a, keys), t = ATTACH[top];
+  showReveal(`
+    <div class="eyebrow" style="text-align:center">Chapter 1 insight · Your attachment wiring</div>
+    ${badge(t.glyph)}
+    <h2 class="type-name">Your attachment wiring is ${top}</h2>
+    <div class="drive">${t.traits}</div>
+    <div class="panel"><h3>What it means for you as a leader</h3><p>${t.means}</p></div>
+    <div class="panel"><h3>Your coaching focus</h3><p>${t.focus}</p></div>
+    ${bars("Your attachment wiring mix", keys, a, top)}`);
+}
+function neuroScore(){
+  const A = groupAvgs(PARTS[1], Object.keys(ATTACH));
+  const secure = A.Secure;
+  const insecure = 6 - avg([A.Anxious, A.Avoidant, A.Disorganized]);
+  const calm = 6 - avg(PARTS[2].qs.map(q=>val(q[0])));
+  return avg([secure, insecure, calm]);
+}
+function safetyFlag(){
+  const r15 = val("R15"); const collapse = avg(["R13","R14","R15"].map(val));
+  return r15 >= 4 || r1(collapse) >= 4.0;
+}
+function revealThreat(){
+  const p = PARTS[2], keys = Object.keys(THREAT);
+  const r = groupAvgs(p, keys); const top = firstMax(r, keys), t = THREAT[top];
+  const secondary = keys.filter(k=> k!==top && r1(r[k]) >= 4.0);
+  const safety = safetyFlag() ? `<div class="panel safety"><h3>Before your results</h3><p>${SAFETY_TEXT}</p></div>` : "";
+  showReveal(`
+    ${safety}
+    <div class="eyebrow" style="text-align:center">Chapter 1 insight · Your threat response</div>
+    ${badge(t.glyph)}
+    <h2 class="type-name">Under pressure, you move into ${top==="Collapse/Shutdown" ? "Shutdown" : top}</h2>
+    <div class="portrait">Primary threat response: ${top}${secondary.length ? ` · Strong secondary: ${secondary.join(", ")}` : ""}</div>
+    <div class="drive">${t.traits}</div>
+    <div class="panel"><h3>What it looks like in leadership</h3><p>${t.looks}</p></div>
+    <div class="panel"><h3>Your coaching focus</h3><p>${t.focus}</p></div>
+    ${bars("Your threat response mix", keys, r, top, {wide:true, label:k=> k==="Collapse/Shutdown" ? "Shutdown" : k})}
+    <div class="divider"><span>Chapter 1 complete</span></div>
+    <div class="eyebrow" style="text-align:center">Your Wiring · Neurobiological score</div>
+    ${badge(f1(neuroScore()), true)}
+    <h2 class="type-name">${band(neuroScore())}</h2>
+    <div class="portrait">Neurobiological score ${f1(neuroScore())} of 5 · ${band(neuroScore())} is ${BAND_RANGE[band(neuroScore())]}</div>
+    ${domainPanel("What your wiring is telling you", neuroScore(), DOMAIN_RESULTS.neuro)}`);
+}
+function revealSpirit(){
+  const p = PARTS[3], keys = Object.keys(SPIRIT_SUB);
+  const s = groupAvgs(p, keys);
+  const score = avg(p.qs.map(q=>scored(q[0])));
+  const low = firstMin(s, keys), high = firstMax(s, keys);
+  showReveal(`
+    <div class="eyebrow" style="text-align:center">Chapter 2 insight · Your faith</div>
+    ${badge(f1(score), true)}
+    <h2 class="type-name">${band(score)}</h2>
+    <div class="portrait">Spiritual score ${f1(score)} of 5 · ${band(score)} is ${BAND_RANGE[band(score)]}</div>
+    ${domainPanel("Where you are with God", score, DOMAIN_RESULTS.spirit)}
+    <div class="panel"><h3>Where you are strong · ${high}</h3><p>${SPIRIT_SUB[high].high}</p></div>
+    <div class="panel"><h3>Your growth area · ${low}</h3><p>${SPIRIT_SUB[low].low}</p></div>
+    ${bars("Your six areas of faith", keys, s, low, {wide:true})}`);
+}
+function revealRelational(){
+  const health = PARTS[4], prof = PARTS[5];
+  const subKeys = ["Connection","Boundaries","Communication","Repair"];
+  const sub = groupAvgs(health, subKeys);
+  const score = avg(health.qs.map(q=>scored(q[0])));
+  const pKeys = ["Rescuer","Peacekeeper","Guarded One","Performer","Commander"];
+  const pv = groupAvgs(prof, pKeys);
+  const anchored = pKeys.every(k=> r1(pv[k]) < 3.0);
+  const top = anchored ? "Anchored Connector" : firstMax(pv, pKeys); const t = PROFILES[top];
+  const low = firstMin(sub, subKeys);
+  showReveal(`
+    <div class="eyebrow" style="text-align:center">Chapter 3 insight · Your relational profile</div>
+    ${badge(t.glyph)}
+    <h2 class="type-name">You are ${t.name}</h2>
+    <div class="drive">${t.shows}</div>
+    <div class="panel"><h3>What it looks like</h3><p>${t.traits}</p></div>
+    <div class="panel"><h3>What it costs you</h3><p>${t.costs}</p></div>
+    <div class="panel"><h3>Your coaching focus</h3><p>${t.focus}</p></div>
+    ${bars("Your relational patterns", pKeys, pv, anchored ? null : top, {wide:true})}
+    <div class="divider"><span>Chapter 3 complete</span></div>
+    <div class="eyebrow" style="text-align:center">Your Relationships · Relational score</div>
+    ${badge(f1(score), true)}
+    <h2 class="type-name">${band(score)}</h2>
+    <div class="portrait">Relational score ${f1(score)} of 5 · ${band(score)} is ${BAND_RANGE[band(score)]}</div>
+    ${domainPanel("How your relationships are carrying you", score, DOMAIN_RESULTS.rel)}
+    ${bars(`Your relational health · growth area: ${low}`, subKeys, sub, low, {wide:true})}`);
+}
+
 $("restartBtn").onclick = () => {
-  answers.fill(null); qi=0; pauseSeen=false; history=[]; clearProgress(); refreshWelcome();
-  mood("welcome"); sceneFor(0); show("s-welcome",{noHistory:true}); history=[];
+  clearProgress(); resetAll(); refreshWelcome();
+  mood("welcome"); show("s-welcome",{noHistory:true}); history=[];
 };
 $("demoBtn").onclick = () => {
-  // Fill plausible answers leaning Shepherd so the reveal can be previewed quickly
-  const lean = {Pioneer:[3,2,4,2],Encourager:[3,4,3,4],Shepherd:[4,5,5,4],Architect:[4,3,4,4]}; const c={Pioneer:0,Encourager:0,Shepherd:0,Architect:0};
-  QUESTIONS.forEach((q,i)=> answers[i] = lean[q[2]][c[q[2]]++]);
-  qi = 16; pauseSeen = true; finish();
+  // Fill plausible answers for the next unfinished part so each insight can be previewed quickly
+  let target = PARTS.findIndex(p=> p.qs.some(q=> !answers[q[0]]));
+  if (target < 0) return;
+  clearInterval(breathTimer);
+  pi = target; const p = P(); const c = {};
+  p.qs.forEach(q=>{ const k=q[2]; c[k]=c[k]||0; answers[q[0]] = p.demo[k][c[k]++]; });
+  pauseSeen[p.id] = true; qi = p.qs.length; setChapterScene(p.ch);
+  finishPart();
 };
 })();
 </script>
