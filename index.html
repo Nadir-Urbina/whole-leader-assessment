@@ -192,6 +192,15 @@ h2{font-size:32px}
 .panel.start{border-color:rgba(227,201,131,.5)}
 .divider{display:flex;align-items:center;gap:12px;margin:30px 0 20px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold-soft)}
 .divider::before,.divider::after{content:"";flex:1;height:1px;background:rgba(227,201,131,.35)}
+
+/* Funnel embed (Content Creator Machine) */
+.app.embedded .proto-tag{display:none}
+.app.embedded.demo .proto-tag{display:block}
+.saving{display:none;text-align:center;margin-top:8px}
+.app.embedded .end .saving{display:block}
+.app.embedded .end .proto-only{display:none}
+.saving .spin{width:38px;height:38px;margin:18px auto 14px;border-radius:50%;border:3px solid rgba(246,239,225,.18);border-top-color:var(--gold-soft);animation:wlspin 1s linear infinite}
+@keyframes wlspin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -314,6 +323,7 @@ h2{font-size:32px}
   <!-- 8. End of prototype -->
   <section class="screen end" id="s-end">
     <div id="endSafety"></div>
+    <div class="proto-only">
     <div class="eyebrow">Chapters 1 to 3 complete</div>
     <h2 style="margin:10px 0 6px">In the full experience, the journey continues</h2>
     <ul>
@@ -322,6 +332,14 @@ h2{font-size:32px}
       <li><b>6</b><span>Scores saved to the contact in Content Creator Machine, then on to Dr. T's video page</span></li>
     </ul>
     <button class="btn" id="restartBtn">Start the prototype over</button>
+    </div>
+    <div class="saving" id="saving">
+      <div class="eyebrow">Your assessment is complete</div>
+      <h2 style="margin:10px 0 6px">Well done. Take a breath.</h2>
+      <div class="spin" aria-hidden="true"></div>
+      <p class="lead" id="savingText">Saving your results and opening a personal message from Dr. Miles…</p>
+      <button class="btn" id="savingNext" hidden>Continue</button>
+    </div>
   </section>
 
   <div class="proto-tag">Prototype · placeholder copy and sound · <button id="demoBtn">Demo: auto-fill answers</button></div>
@@ -917,7 +935,7 @@ function finishPart(){
 function nextPart(){
   if (pi >= PARTS.length-1){
     $("endSafety").innerHTML = safetyFlag() ? `<div class="panel safety"><h3>Before you go</h3><p>${SAFETY_TEXT}</p></div>` : "";
-    clearProgress(); mood("welcome"); show("s-end"); return;
+    clearProgress(); mood("welcome"); show("s-end"); Funnel.complete(); return;
   }
   pi++; qi = 0; saveProgress(0); openPart();
 }
@@ -1064,6 +1082,63 @@ function revealRelational(){
     ${domainPanel("How your relationships are carrying you", score, DOMAIN_RESULTS.rel)}
     ${bars(`Your relational health · growth area: ${low}`, subKeys, sub, low, {wide:true})}`);
 }
+
+
+// ---------- Funnel bridge (Content Creator Machine) ----------
+// When embedded in Dr. T's funnel, the app sends its results to the parent page,
+// which saves them to the contact and moves the visitor to the next funnel step.
+// No personal details enter this app; the funnel page already knows who the visitor is.
+const Funnel = (() => {
+  const qs = new URLSearchParams(location.search);
+  const embedded = window.parent !== window;
+  const ALLOWED = [/^https:\/\/([a-z0-9-]+\.)*drtenekagmiles\.com$/, /^https:\/\/([a-z0-9-]+\.)*contentcreatormachine\.com$/,
+                   /^https:\/\/([a-z0-9-]+\.)*leadconnectorhq\.com$/, /^https:\/\/([a-z0-9-]+\.)*msgsndr\.com$/,
+                   /^https:\/\/([a-z0-9-]+\.)*healandleadwell\.com$/];
+  let parentOrigin = null;
+  try { const o = document.referrer ? new URL(document.referrer).origin : null; if (o && ALLOWED.some(r=>r.test(o))) parentOrigin = o; } catch(e){}
+  if (embedded) app.classList.add("embedded");
+  if (qs.get("demo") === "1") app.classList.add("demo");
+  function post(type, data){ if (embedded && parentOrigin) window.parent.postMessage(Object.assign({source:"wla", type}, data||{}), parentOrigin); }
+  window.addEventListener("message", e => {
+    if (!parentOrigin || e.origin !== parentOrigin || !e.data || e.data.source !== "wl-funnel") return;
+    if (e.data.type === "hello" && e.data.firstName){
+      const h = document.querySelector("#s-welcome h1");
+      if (h && !h.dataset.named){ h.dataset.named = 1; h.insertAdjacentHTML("beforebegin", `<div class="eyebrow" style="margin-bottom:6px">Welcome, ${String(e.data.firstName).replace(/[<>&"]/g,"").slice(0,40)}</div>`); }
+    }
+  });
+  post("ready");
+  // Tell the funnel when someone begins (used to tell drop-offs from finishers)
+  const begin = $("beginBtn"); if (begin) begin.addEventListener("click", () => post("started"), {once:true});
+
+  function summary(){
+    const r = {}; const safe = fn => { try { return fn(); } catch(e){ return null; } };
+    safe(()=>{ const p=PARTS[0], k=Object.keys(TYPES), x={}; k.forEach(t=> x[t]=p.qs.filter(q=>q[2]===t).reduce((a,q)=>a+val(q[0]),0)); r.temperament = firstMax(x,k); });
+    safe(()=>{ const k=Object.keys(ATTACH); r.attachment = firstMax(groupAvgs(PARTS[1],k),k); });
+    safe(()=>{ const k=Object.keys(THREAT); r.threatResponse = firstMax(groupAvgs(PARTS[2],k),k); });
+    safe(()=>{ const n=neuroScore(); r.neuroScore = f1(n); r.neuroBand = band(n); });
+    safe(()=>{ const p=PARTS[3], k=Object.keys(SPIRIT_SUB), sub=groupAvgs(p,k), sc=avg(p.qs.map(q=>scored(q[0])));
+               r.spiritualScore = f1(sc); r.spiritualBand = band(sc); r.spiritualGrowthArea = firstMin(sub,k); });
+    safe(()=>{ const h=PARTS[4], pr=PARTS[5], sk=["Connection","Boundaries","Communication","Repair"], pk=["Rescuer","Peacekeeper","Guarded One","Performer","Commander"];
+               const sc=avg(h.qs.map(q=>scored(q[0]))), pv=groupAvgs(pr,pk), anchored=pk.every(k=> r1(pv[k])<3.0);
+               r.relationalScore = f1(sc); r.relationalBand = band(sc); r.relationalProfile = anchored ? "Anchored Connector" : firstMax(pv,pk);
+               r.relationalGrowthArea = firstMin(groupAvgs(h,sk),sk); });
+    // Lowest domain score = where to focus first
+    const d = {Wiring:+r.neuroScore, Faith:+r.spiritualScore, Relationships:+r.relationalScore};
+    const dk = Object.keys(d).filter(k=> !isNaN(d[k])); if (dk.length) r.focusDomain = firstMin(d, dk);
+    r.safetyFlag = safe(safetyFlag) ? "yes" : "no";
+    r.chaptersCompleted = String(Math.max(...PARTS.map(p=>p.ch)));
+    r.version = "ch1-3";
+    return r;
+  }
+  function complete(){
+    if (!embedded) return;
+    const results = summary();
+    post("complete", {results});
+    // If the funnel page doesn't take over (for example, opened outside the funnel), offer a manual continue
+    setTimeout(()=>{ $("savingText").textContent = "Your results are ready."; const b=$("savingNext"); b.hidden=false; b.onclick=()=> post("complete", {results, manual:true}); }, 8000);
+  }
+  return {complete, post};
+})();
 
 $("restartBtn").onclick = () => {
   clearProgress(); resetAll(); refreshWelcome();
