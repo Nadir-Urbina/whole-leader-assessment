@@ -1135,7 +1135,7 @@ const Funnel = (() => {
     const results = summary();
     post("complete", {results});
     // If the funnel page doesn't take over (for example, opened outside the funnel), offer a manual continue
-    setTimeout(()=>{ $("savingText").textContent = "Your results are ready."; const b=$("savingNext"); b.hidden=false; b.onclick=()=> post("complete", {results, manual:true}); }, 8000);
+    setTimeout(()=>{ const s=document.querySelector("#saving .spin"); if (s) s.style.display="none"; $("savingText").textContent = "Your results are ready."; const b=$("savingNext"); b.hidden=false; b.onclick=()=> post("complete", {results, manual:true}); }, 8000);
   }
   return {complete, post};
 })();
