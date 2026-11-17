@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Whole Leader Assessment: Chapters 1 to 3 Prototype</title>
+<title>The Whole Leader Assessment</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -184,6 +184,33 @@ h2{font-size:32px}
 .app[data-scene="relational"] #sky .s2{stop-color:#ead2bb}
 .app[data-scene="relational"] #sky .s3{stop-color:#f4e6d6}
 .app[data-scene="relational"] .sun{transform:translateY(28px)}
+.app[data-scene="emotional"] #sky .s1{stop-color:#f6eef0}
+.app[data-scene="emotional"] #sky .s2{stop-color:#e6c9c0}
+.app[data-scene="emotional"] #sky .s3{stop-color:#f3e4dc}
+.app[data-scene="emotional"] .sun{transform:translateY(-30px)}
+.app[data-scene="whole"] #sky .s1{stop-color:#fbf4e6}
+.app[data-scene="whole"] #sky .s2{stop-color:#f0d9a4}
+.app[data-scene="whole"] #sky .s3{stop-color:#f7ecd6}
+.app[data-scene="whole"] .sun{transform:translateY(-110px)}
+/* Whole Leader profile */
+.radar{display:block;width:100%;max-width:340px;margin:4px auto 6px}
+.radar .ring{fill:none;stroke:rgba(14,27,51,.1)}
+.radar .axis{stroke:rgba(14,27,51,.12)}
+.radar .shape{fill:rgba(168,132,63,.22);stroke:var(--gold);stroke-width:2;stroke-linejoin:round;transform-origin:150px 150px;transform:scale(0);transition:transform 1.4s cubic-bezier(.2,.7,.2,1)}
+.radar.on .shape{transform:scale(1)}
+.radar .pt{fill:var(--navy-900);stroke:var(--ivory);stroke-width:2}
+.radar text{font-family:Manrope,sans-serif;font-size:12px;font-weight:700;fill:var(--navy-900);letter-spacing:.04em}
+.radar text.v{font-family:Fraunces,serif;font-size:14px;font-weight:600;fill:var(--gold-deep);letter-spacing:0}
+.panel.signature{background:var(--navy-900);border-color:var(--navy-900);text-align:center;padding:24px 20px}
+.panel.signature h3{color:var(--gold-soft)}
+.panel.signature p{font-family:Fraunces,serif;font-size:19px;line-height:1.45;color:var(--ivory)}
+.panel.signature .btn{margin-top:16px;background:var(--gold-soft);color:var(--navy-900);font-size:14px;padding:13px 18px}
+.panel.pattern{border-color:rgba(168,132,63,.5)}
+.panel.pattern .focus{margin-top:10px;font-size:15px;color:var(--gold-deep)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.pair .panel{margin:0;text-align:center}
+.pair .panel b{display:block;font-family:Fraunces,serif;font-size:22px;color:var(--navy-900);margin-top:2px}
+.pair .panel span{font-size:14px;color:var(--muted)}
 .question .qstem{font-family:Fraunces,serif;font-style:italic;font-size:18px;color:#4a5161;margin-top:12px;text-shadow:0 1px 14px rgba(252,250,245,.9)}
 .question .qstem[hidden]{display:none}
 .question .qstem+.qtext{margin-top:6px}
@@ -259,7 +286,7 @@ h2{font-size:32px}
         <div class="chip"><b>3</b> Your Relationships</div>
         <div class="chip"><b>4</b> Your Emotions</div>
       </div>
-      <div class="meta"><span>About 12 minutes</span><span>·</span><span>Pause anytime</span></div>
+      <div class="meta"><span>About 20 minutes</span><span>·</span><span>Pause anytime</span></div>
       <div class="startbox">
         <button class="btn" id="beginBtn">Begin my assessment</button>
         <button class="btn ghost" id="restartFromWelcome" hidden>Start over instead</button>
@@ -323,18 +350,14 @@ h2{font-size:32px}
     <div class="stagger" id="revealContent"></div>
   </section>
 
-  <!-- 8. End of prototype -->
+  <!-- 8. End -->
   <section class="screen end" id="s-end">
     <div id="endSafety"></div>
     <div class="proto-only">
-    <div class="eyebrow">Chapters 1 to 3 complete</div>
-    <h2 style="margin:10px 0 6px">In the full experience, the journey continues</h2>
-    <ul>
-      <li><b>4</b><span>Chapter 4, Your Emotions (16), with its own light and music</span></li>
-      <li><b>5</b><span>The Whole Leader Index, the four-domain chart and your shareable Leadership Signature</span></li>
-      <li><b>6</b><span>Scores saved to the contact in Content Creator Machine, then on to Dr. T's video page</span></li>
-    </ul>
-    <button class="btn" id="restartBtn">Start the prototype over</button>
+    <div class="eyebrow">Your assessment is complete</div>
+    <h2 style="margin:10px 0 6px">Well done. Take a breath.</h2>
+    <p class="lead" style="margin-bottom:22px">Thank you for doing this honest work. Your growth domain is where your coaching begins.</p>
+    <button class="btn" id="restartBtn">Start over</button>
     </div>
     <div class="saving" id="saving">
       <div class="eyebrow">Your assessment is complete</div>
@@ -368,8 +391,53 @@ const CHAPTERS = {
   3:{title:"Your Relationships", size:27, key:1.1225, scene:"relational",
      words:"Leadership is lived with people. Let's look at how you show up with the people around you.",
      verse:'"Bear ye one another\'s burdens, and so fulfil the law of Christ."<small>Galatians 6:2</small>', btn:"Let's begin"},
-  4:{title:"Your Emotions", size:16}
+  4:{title:"Your Emotions", size:16, key:1.1892, scene:"emotional",
+     words:"Last, let's look at how you carry what you feel.",
+     verse:'"Keep thy heart with all diligence; for out of it are the issues of life."<small>Proverbs 4:23</small>', btn:"I'm ready"}
 };
+
+// Emotional capacities (Chapter 4)
+const EMO_SUB = {
+ "Awareness":{high:"You know what you feel, where it lives in your body, and what sets it off.",low:"Emotions shape your words and decisions before you notice them."},
+ "Expression":{high:"You share emotions honestly and in a way that fits the setting.",low:"Emotions stay buried until they leak out sideways, or come out in ways that harm."},
+ "Regulation":{high:"You can calm your body and pause before you react.",low:"Triggers move straight into reaction, and emotion drives decisions."},
+ "Recovery":{high:"You return to steady ground within hours.",low:"Hard moments replay for days and stress spills into every part of life."}
+};
+
+// Integrated Whole Leader profile (Section 7 of the build guide)
+const DOMAINS = [
+ {key:"neuro", name:"Neurobiological", label:"Wiring"},
+ {key:"spirit", name:"Spiritual", label:"Faith"},
+ {key:"rel", name:"Relational", label:"Relationships"},
+ {key:"emo", name:"Emotional", label:"Emotions"}
+];
+const INDEX_TEXT = {
+ Healing:"Your whole system is carrying more than it was built to carry. This is not a failure of leadership or faith. It is a signal that healing comes before the next level of leading. The next six months focus on restoring safety, honesty, and support so you can lead from health instead of survival.",
+ Restoring:"Your foundation is real and your capacity is coming back. Pressure still pulls parts of you back into old patterns. The next six months focus on strengthening your growth domain so it stops draining the strong ones.",
+ Growing:"You are leading from a mostly healthy place. One or two areas lag behind and show up under pressure. The next six months focus on targeted growth so your weakest area catches up to your strongest.",
+ Transforming:"You lead from a whole, connected place. Your wiring, faith, relationships, and emotions support each other. The next six months focus on sustaining your health and multiplying whole leaders around you."
+};
+// Checked in order; the first match is reported (Part 4)
+const PATTERNS = [
+ {name:"Integrated Leader", test:p=> DOMAINS.every(d=> r1(p.scores[d.key]) >= 4.0),
+  text:"You lead from a whole, connected place. Every part of you is working together.",
+  focus:"Sustainability and multiplying whole leaders"},
+ {name:"The Over-Functioner", test:p=> p.attach==="Anxious" && p.threat==="Fawn" && p.profile==="Rescuer",
+  text:"You carry everyone and call it love. Your worth rides on being needed, and your body pays for it.",
+  focus:"Boundaries, and identity in Christ apart from usefulness"},
+ {name:"The Fortress", test:p=> p.attach==="Avoidant" && ["Fight","Flight"].includes(p.threat) && ["Guarded One","Commander"].includes(p.profile),
+  text:"You are strong, self-reliant, and alone at the top. People follow you and few know you.",
+  focus:"Receiving help and letting people in"},
+ {name:"Quiet Burnout", test:p=> ["Freeze","Collapse/Shutdown"].includes(p.threat) && p.profile==="Peacekeeper",
+  text:"You hold everything in and keep going until your body stops you.",
+  focus:"Nervous system restoration before new responsibility"},
+ {name:"The Achiever's Trap", test:p=> ["Pioneer","Architect"].includes(p.temperament) && p.threat==="Flight" && p.profile==="Performer",
+  text:"Your output is high and your rest is low. Success is feeding the pattern.",
+  focus:"Sabbath rest and worth beyond performance"},
+ {name:"Spiritual-Emotional Gap", test:p=> r1(p.scores.spirit) >= 3.3 && r1(p.scores.emo) <= 2.4,
+  text:"Your faith is strong and your emotional capacity is depleted. Spiritual language may be covering what your body is carrying.",
+  focus:"Bringing emotional honesty into your walk with God"}
+];
 
 // Temperament (Part A)
 const TYPES = {
@@ -501,7 +569,12 @@ const DOMAIN_RESULTS = {
   Healing:["Relationships cost you more than they give. You may be isolated at the top, carrying others, or sitting in unrepaired conflict.","Establish boundaries and build one safe, reciprocal relationship.","Name one person you can be honest with and schedule a conversation with no agenda."],
   Restoring:["You have real relational strengths and one or two clear gaps, most often boundaries or repair.","Target your weakest subscale with practice in real relationships.","Say one clean no this week without over-explaining."],
   Growing:["Your relationships are mostly healthy. Strain shows up under pressure or with specific people.","Identify the relationships where your profile pattern takes over and practice a different response there.","Choose one strained relationship and plan one repair step."],
-  Transforming:["You build trust and create safety for others. People can be honest with you.","Develop relational health in the leaders around you and protect your own support system.","Ask someone you lead how you can support them better, and listen without defending."]}
+  Transforming:["You build trust and create safety for others. People can be honest with you.","Develop relational health in the leaders around you and protect your own support system.","Ask someone you lead how you can support them better, and listen without defending."]},
+ emo:{
+  Healing:["Emotions either run you or stay buried until they leak. You may notice feelings only after they have shaped a decision.","Build awareness first: name it, locate it in the body, then choose a response.","Check in three times a day: what am I feeling, and where do I feel it in my body?"],
+  Restoring:["You can read your emotions some of the time, and regulation breaks down under load. Recovery may take days.","Strengthen regulation and shorten recovery time.","After any hard interaction, take 5 minutes to name it before you move to the next thing."],
+  Growing:["You manage your emotions well in most settings. One capacity, often expression or recovery, lags.","Target your lowest capacity and practice it in leadership settings.","Name your lowest capacity and pick one situation this week to practice it."],
+  Transforming:["You feel fully and respond with wisdom. Your emotional steadiness sets the tone for others.","Model healthy emotional expression for your team and watch for suppression under success.","Share one honest emotion with your team this week in a way that builds trust."]}
 };
 
 // ---------- Parts: one per page of the build guide ----------
@@ -657,7 +730,32 @@ const PARTS = [
   pauseAfter:8, pause:{title:"Almost there. Breathe with me.", verse:'"A new commandment I give unto you, That ye love one another; as I have loved you."<small>John 13:34</small>'},
   toasts:{12:"<b>Three more.</b> Then your relational profile is revealed."},
   buildTitle:"This is how you show up with people.", reveal:revealRelational,
-  demo:{"Rescuer":[4,4,3],"Peacekeeper":[3,4,3],"Guarded One":[2,3,3],"Performer":[3,3,4],"Commander":[2,2,2]}}
+  demo:{"Rescuer":[4,4,3],"Peacekeeper":[3,4,3],"Guarded One":[2,3,3],"Performer":[3,3,4],"Commander":[2,2,2]}},
+
+ {id:"EM", ch:4, part:"", name:"Your Emotions", scale:"B", opener:"chapter",
+  title:"How you carry what you feel",
+  text:"Think about the last few months. How often is each statement true for you?",
+  qs:[
+   ["E1","I can name what I am feeling as it happens.","Awareness"],
+   ["E2","I notice where emotions show up in my body.","Awareness"],
+   ["E3","I recognize what triggers my strongest reactions.","Awareness"],
+   ["E4","I realize I was upset only after it has affected my words or decisions.","Awareness"],
+   ["E5","I share emotions in ways that fit the setting.","Expression"],
+   ["E6","I can let people see sadness or fear without feeling exposed.","Expression"],
+   ["E7","I hold my emotions in until they come out sideways.","Expression"],
+   ["E8","I can express anger without harming others.","Expression"],
+   ["E9","I can calm my body when I feel overwhelmed.","Regulation"],
+   ["E10","I pause before reacting when I am triggered.","Regulation"],
+   ["E11","I use healthy tools such as prayer, a deep breathing exercise, or movement to steady myself.","Regulation"],
+   ["E12","My emotions drive my decisions before I have thought them through.","Regulation"],
+   ["E13","I return to a steady state within a few hours of a hard interaction.","Recovery"],
+   ["E14","I can set down a hard moment instead of replaying it for days.","Recovery"],
+   ["E15","I bounce back from disappointment without staying stuck for weeks.","Recovery"],
+   ["E16","Stress from one part of my life spills into every other part.","Recovery"]],
+  pauseAfter:8, pause:{title:"You're halfway through Chapter 4.", verse:'"And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus."<small>Philippians 4:7</small>'},
+  toasts:{4:"<b>Feelings are information.</b> Notice them without judging them.",13:"<b>Three more.</b> Then your whole picture comes together."},
+  buildTitle:"This is how you carry what you feel.", reveal:revealEmotional,
+  demo:{"Awareness":[4,3,4,2],"Expression":[3,2,3,4],"Regulation":[3,3,4,3],"Recovery":[3,2,3,3]}}
 ];
 // Fill defaults and global question numbering
 let offset = 0;
@@ -754,7 +852,7 @@ setSound(false);
 // ---------- Scene: each chapter gets its own light and key ----------
 let sceneCh = 1;
 function setChapterScene(ch){
-  if (ch === sceneCh) return; sceneCh = ch;
+  if (ch === sceneCh && app.dataset.scene !== "whole") return; sceneCh = ch;
   app.dataset.scene = CHAPTERS[ch].scene || "";
   const m = CHAPTERS[ch].key || 1;
   if (m !== keyMul){ keyMul = m; if (audio) audio.retune(); }
@@ -795,7 +893,7 @@ const answeredCount = () => Object.keys(answers).length;
 function saveProgress(nextQi){ try{ localStorage.setItem(KEY, JSON.stringify({answers, pi, qi:nextQi, pauseSeen, t:Date.now()})); }catch(e){} }
 function loadProgress(){ try{ const d = JSON.parse(localStorage.getItem(KEY)||"null"); if(!d || !d.answers) return null; d.answered = Object.keys(d.answers).length; return d; }catch(e){ return null; } }
 function clearProgress(){ try{ localStorage.removeItem(KEY); }catch(e){} }
-function resetAll(){ Object.keys(answers).forEach(k=> delete answers[k]); pi=0; qi=0; pauseSeen={}; history=[]; setChapterScene(1); }
+function resetAll(){ Object.keys(answers).forEach(k=> delete answers[k]); pi=0; qi=0; pauseSeen={}; history=[]; indexShown=false; setChapterScene(1); }
 function resume(d){
   Object.assign(answers, d.answers); pi = Math.min(d.pi||0, PARTS.length-1); pauseSeen = d.pauseSeen || {};
   qi = Math.min(d.qi||0, P().qs.length);
@@ -935,19 +1033,27 @@ function finishPart(){
   mood("reveal");
   show("s-building", {onShow: build});
 }
+let indexShown = false;
 function nextPart(){
+  if (pi >= PARTS.length-1 && !indexShown){
+    // After the last chapter, build the integrated Whole Leader profile
+    indexShown = true; saveProgress(P().qs.length);
+    $("buildTitle").textContent = "This is your whole leader picture.";
+    app.dataset.scene = "whole"; mood("reveal");
+    show("s-building", {onShow: () => build(revealIndex)}); return;
+  }
   if (pi >= PARTS.length-1){
     $("endSafety").innerHTML = safetyFlag() ? `<div class="panel safety"><h3>Before you go</h3><p>${SAFETY_TEXT}</p></div>` : "";
     clearProgress(); mood("welcome"); show("s-end"); Funnel.complete(); return;
   }
   pi++; qi = 0; saveProgress(0); openPart();
 }
-function build(){
+function build(revealFn){
   const svg = $("constellation");
   svg.innerHTML = `<defs><radialGradient id="cg"><stop offset="0" stop-color="#fbf3df"/><stop offset=".5" stop-color="#e2cb98"/><stop offset="1" stop-color="#a8843f" stop-opacity="0"/></radialGradient></defs><circle cx="120" cy="120" r="80" fill="url(#cg)" style="opacity:0;transition:opacity 1.8s ease" id="core"/>`;
   requestAnimationFrame(()=> setTimeout(()=> svg.querySelector("#core").style.opacity = 1, 50));
   if (soundOn && audio){ audio.swell(); [523.25,659.25,783.99].forEach((f,i)=>setTimeout(()=>audio.chime(f*keyMul,.045,3), 300+i*450)); }
-  setTimeout(()=>{ show("s-reveal", {onShow: () => P().reveal()}); }, 3600);
+  setTimeout(()=>{ show("s-reveal", {onShow: () => (revealFn || P().reveal)()}); }, 3600);
 }
 function badge(glyph, small){
   return `<div class="badge"><svg viewBox="0 0 170 170"><defs><radialGradient id="bg2" cx=".35" cy=".3"><stop offset="0" stop-color="#2f4775"/><stop offset=".6" stop-color="#16284a"/><stop offset="1" stop-color="#0e1b33"/></radialGradient></defs>
@@ -967,7 +1073,9 @@ function domainPanel(title, score, results){
 }
 function nextButton(){
   const n = PARTS[pi+1];
-  if (!n) return `<div class="next"><button class="btn" id="toNext">Continue</button></div>`;
+  if (!n) return indexShown
+    ? `<div class="next"><button class="btn" id="toNext">Finish</button></div>`
+    : `<div class="next"><button class="btn" id="toNext">See your Whole Leader profile</button><small>Your four chapters, brought together</small></div>`;
   const label = n.ch !== P().ch ? `Continue to Chapter ${n.ch}: ${CHAPTERS[n.ch].title}` : `Continue to ${n.part}: ${n.name}`;
   const count = n.ch !== P().ch ? CHAPTERS[n.ch].size : n.qs.length;
   return `<div class="next"><button class="btn" id="toNext">${label}</button><small>${count} questions · about ${Math.max(2, Math.round(count/6))} minutes</small></div>`;
@@ -1086,6 +1194,95 @@ function revealRelational(){
     ${bars(`Your relational health · growth area: ${low}`, subKeys, sub, low, {wide:true})}`);
 }
 
+function emotionalScores(){
+  const p = PARTS[6], keys = Object.keys(EMO_SUB);
+  return {sub: groupAvgs(p, keys), score: avg(p.qs.map(q=>scored(q[0]))), keys};
+}
+function revealEmotional(){
+  const {sub, score, keys} = emotionalScores();
+  const low = firstMin(sub, keys), high = firstMax(sub, keys);
+  showReveal(`
+    <div class="eyebrow" style="text-align:center">Chapter 4 insight · Your emotions</div>
+    ${badge(f1(score), true)}
+    <h2 class="type-name">${band(score)}</h2>
+    <div class="portrait">Emotional score ${f1(score)} of 5 · ${band(score)} is ${BAND_RANGE[band(score)]}</div>
+    ${domainPanel("How you carry what you feel", score, DOMAIN_RESULTS.emo)}
+    <div class="panel"><h3>Where you are strong · ${high}</h3><p>${EMO_SUB[high].high}</p></div>
+    <div class="panel"><h3>Your growth area · ${low}</h3><p>${EMO_SUB[low].low}</p></div>
+    ${bars("Your four emotional capacities", keys, sub, low, {wide:true})}
+    <div class="divider"><span>Chapter 4 complete</span></div>`);
+}
+
+// ---------- Integrated Whole Leader profile ----------
+function wholeProfile(){
+  const t = {}; Object.keys(TYPES).forEach(k=> t[k] = PARTS[0].qs.filter(q=>q[2]===k).reduce((a,q)=>a+val(q[0]),0));
+  const temperament = firstMax(t, Object.keys(TYPES));
+  const attach = firstMax(groupAvgs(PARTS[1], Object.keys(ATTACH)), Object.keys(ATTACH));
+  const threat = firstMax(groupAvgs(PARTS[2], Object.keys(THREAT)), Object.keys(THREAT));
+  const pKeys = ["Rescuer","Peacekeeper","Guarded One","Performer","Commander"];
+  const pv = groupAvgs(PARTS[5], pKeys);
+  const profile = pKeys.every(k=> r1(pv[k]) < 3.0) ? "Anchored Connector" : firstMax(pv, pKeys);
+  const scores = {
+    neuro: neuroScore(),
+    spirit: avg(PARTS[3].qs.map(q=>scored(q[0]))),
+    rel: avg(PARTS[4].qs.map(q=>scored(q[0]))),
+    emo: emotionalScores().score
+  };
+  const index = avg(DOMAINS.map(d=> scores[d.key]));
+  const dk = DOMAINS.map(d=>d.key);
+  const rounded = {}; dk.forEach(k=> rounded[k] = r1(scores[k]));
+  const strongest = DOMAINS.find(d=> d.key===firstMax(rounded, dk));
+  const growth = DOMAINS.find(d=> d.key===firstMin(rounded, dk));
+  const p = {temperament, attach, threat, profile, scores, index, strongest, growth};
+  const threatName = threat==="Collapse/Shutdown" ? "Shutdown" : threat;
+  p.signature = `You are The ${temperament} with ${attach} attachment wiring. Under pressure your system moves toward ${threatName}, and in relationships you tend to show up as ${PROFILES[profile].name}.`;
+  p.pattern = PATTERNS.find(x=> x.test(p)) || null;
+  return p;
+}
+function radar(scores){
+  // Four-domain chart: Wiring top, Faith right, Relationships bottom, Emotions left. 1 at the center, 5 at the edge.
+  const c = 150, R = 100, ang = [-90, 0, 90, 180].map(a=> a*Math.PI/180);
+  const pt = (i, v) => { const r = R*(v-1)/4; return [c + r*Math.cos(ang[i]), c + r*Math.sin(ang[i])]; };
+  const rings = [2,3,4,5].map(v=> `<polygon class="ring" points="${ang.map((_,i)=> pt(i,v).join(",")).join(" ")}"/>`).join("");
+  const axes = ang.map((_,i)=>{ const [x,y] = pt(i,5); return `<line class="axis" x1="${c}" y1="${c}" x2="${x}" y2="${y}"/>`; }).join("");
+  const vals = DOMAINS.map(d=> Math.max(1, Math.min(5, scores[d.key])));
+  const shape = `<polygon class="shape" points="${vals.map((v,i)=> pt(i,v).join(",")).join(" ")}"/>`;
+  const dots = vals.map((v,i)=>{ const [x,y] = pt(i,v); return `<circle class="pt" cx="${x}" cy="${y}" r="5"/>`; }).join("");
+  const pos = [[c,22,"middle"],[c+R+14,c-6,"start"],[c,c+R+30,"middle"],[c-R-14,c-6,"end"]];
+  const labels = DOMAINS.map((d,i)=>{ const [x,y,a] = pos[i]; return `<text x="${x}" y="${y}" text-anchor="${a}">${d.label.toUpperCase()}</text><text class="v" x="${x}" y="${y+17}" text-anchor="${a}">${f1(scores[d.key])}</text>`; }).join("");
+  return `<svg class="radar" viewBox="-48 0 396 300" role="img" aria-label="Your four domain scores">${rings}${axes}${shape}${dots}${labels}</svg>`;
+}
+function revealIndex(){
+  const p = wholeProfile(); const b = band(p.index);
+  const safety = safetyFlag() ? `<div class="panel safety"><h3>Before your results</h3><p>${SAFETY_TEXT}</p></div>` : "";
+  const pattern = p.pattern ? `<div class="panel pattern"><h3>Your signature pattern · ${p.pattern.name}</h3><p>${p.pattern.text}</p><p class="focus">First coaching priority: ${p.pattern.focus}</p></div>` : "";
+  const domVals = {}; DOMAINS.forEach(d=> domVals[d.label] = p.scores[d.key]);
+  showReveal(`
+    ${safety}
+    <div class="eyebrow" style="text-align:center">Your Whole Leader profile</div>
+    ${badge(f1(p.index), true)}
+    <h2 class="type-name">${b}</h2>
+    <div class="portrait">Whole Leader Index ${f1(p.index)} of 5 · ${b} is ${BAND_RANGE[b]}</div>
+    <div class="drive">${INDEX_TEXT[b]}</div>
+    <div class="panel"><h3>Your four domains</h3>${radar(p.scores)}</div>
+    <div class="pair">
+      <div class="panel"><h3>Strongest</h3><b>${p.strongest.label}</b><span>${p.strongest.name} · ${f1(p.scores[p.strongest.key])}</span></div>
+      <div class="panel start"><h3>Growth</h3><b>${p.growth.label}</b><span>${p.growth.name} · ${f1(p.scores[p.growth.key])}</span></div>
+    </div>
+    <div class="panel"><p>Your strongest domain is ${p.strongest.name}. Your growth domain is ${p.growth.name}, and it is where your coaching begins.</p></div>
+    <div class="panel signature"><h3>Your Leadership Signature</h3><p id="sigText">${p.signature}</p><button class="btn" id="shareSig">Share my Leadership Signature</button></div>
+    ${pattern}
+    <div class="verse on" style="text-align:center;margin:22px 0 4px">"And the very God of peace sanctify you wholly; and I pray God your whole spirit and soul and body be preserved blameless."<small>1 Thessalonians 5:23</small></div>`);
+  setTimeout(()=> document.querySelector("#revealContent .radar")?.classList.add("on"), 900);
+  $("shareSig").onclick = async () => {
+    const text = `My Leadership Signature from the Whole Leader Assessment: ${p.signature}`;
+    try {
+      if (navigator.share){ await navigator.share({title:"My Leadership Signature", text}); return; }
+      await navigator.clipboard.writeText(text); toast("<b>Copied.</b> Paste it anywhere to share.");
+    } catch(e){ if (e && e.name !== "AbortError") toast("Press and hold the text above to copy it."); }
+  };
+}
+
 
 // ---------- Funnel bridge (Content Creator Machine) ----------
 // When embedded in Dr. T's funnel, the app sends its results to the parent page,
@@ -1125,12 +1322,16 @@ const Funnel = (() => {
                const sc=avg(h.qs.map(q=>scored(q[0]))), pv=groupAvgs(pr,pk), anchored=pk.every(k=> r1(pv[k])<3.0);
                r.relationalScore = f1(sc); r.relationalBand = band(sc); r.relationalProfile = anchored ? "Anchored Connector" : firstMax(pv,pk);
                r.relationalGrowthArea = firstMin(groupAvgs(h,sk),sk); });
-    // Lowest domain score = where to focus first
-    const d = {Wiring:+r.neuroScore, Faith:+r.spiritualScore, Relationships:+r.relationalScore};
-    const dk = Object.keys(d).filter(k=> !isNaN(d[k])); if (dk.length) r.focusDomain = firstMin(d, dk);
+    safe(()=>{ const e=emotionalScores(); r.emotionalScore = f1(e.score); r.emotionalBand = band(e.score); r.emotionalGrowthArea = firstMin(e.sub, e.keys); });
+    safe(()=>{ const w=wholeProfile();
+               r.wholeLeaderIndex = f1(w.index); r.wholeLeaderBand = band(w.index);
+               r.strongestDomain = w.strongest.name; r.growthDomain = w.growth.name;
+               r.leadershipSignature = w.signature; r.signaturePattern = w.pattern ? w.pattern.name : ""; });
+    // Kept for the existing funnel mapping: the growth domain is where coaching starts
+    r.focusDomain = r.growthDomain ? DOMAINS.find(d=> d.name===r.growthDomain).label : "";
     r.safetyFlag = safe(safetyFlag) ? "yes" : "no";
     r.chaptersCompleted = String(Math.max(...PARTS.map(p=>p.ch)));
-    r.version = "ch1-3";
+    r.version = "full";
     return r;
   }
   function complete(){
